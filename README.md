@@ -10,10 +10,10 @@ A local-first integration environment for the Ulu MCP ecosystem. UluOS composes 
             │  (Control Plane)│
             └────────┬────────┘
                      │
-         ┌───────────┼───────────────┐
-         │      Protocol Layer      │
-         │   DorkFiMCP │ EnvoiMCP   │
-         └───────────┬───────────────┘
+         ┌───────────┼──────────────────────┐
+         │          Protocol Layer          │
+         │ DorkFiMCP │ EnvoiMCP │ AramidMCP│
+         └───────────┬──────────────────────┘
                      │
     ┌────────────────┼────────────────┐
     │     Ecosystem Meaning Layer     │
@@ -38,6 +38,7 @@ A local-first integration environment for the Ulu MCP ecosystem. UluOS composes 
 | **UluAlgorandMCP** | Ecosystem | Algorand protocol discovery, NFDomains, contract identification |
 | **DorkFiMCP** | Protocol | DorkFi lending: markets, positions, deposits, liquidations |
 | **EnvoiMCP** | Protocol | enVoi name service: resolution, profiles, registration lookup |
+| **AramidBridgeMCP** | Protocol | Aramid Bridge: cross-chain bridging between Voi and Algorand |
 
 ## Quick Start
 
@@ -62,7 +63,7 @@ git clone git@github.com:NautilusOSS/UluOS.git && cd UluOS
 
 ### Start using
 
-Open the `UluOS` folder in Cursor — all 71 tools across 7 services are available immediately.
+Open the `UluOS` folder in Cursor — all 73 tools across 8 services are available immediately.
 
 ### HTTP gateway (Docker)
 
@@ -76,7 +77,7 @@ curl http://localhost:3000/capabilities
 
 ## MCP Integration
 
-The gateway is also an MCP server. Agents connect once and get access to all 71 tools across 7 services — no need to configure individual MCP connections.
+The gateway is also an MCP server. Agents connect once and get access to all 73 tools across 8 services — no need to configure individual MCP connections.
 
 **Cursor / local agents (stdio):**
 

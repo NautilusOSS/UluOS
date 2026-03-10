@@ -1,0 +1,77 @@
+[
+  {
+    "name": "aramid-bridge.get_supported_assets",
+    "service": "aramid-bridge",
+    "tool": "get_supported_assets",
+    "description": "List assets supported by the Aramid Bridge with available routes between Voi and Algorand",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "chain": {
+          "type": "string",
+          "enum": ["voi", "algorand"],
+          "description": "Filter by source chain, or omit to show all routes"
+        },
+        "symbol": {
+          "type": "string",
+          "description": "Filter by token symbol (e.g. VOI, USDC, ETH)"
+        }
+      }
+    },
+    "response": {
+      "type": "array",
+      "description": "Bridgeable assets with source/destination token IDs and route information"
+    }
+  },
+  {
+    "name": "aramid-bridge.bridge_txn",
+    "service": "aramid-bridge",
+    "tool": "bridge_txn",
+    "description": "Build unsigned bridge transaction for transferring assets between Voi and Algorand via the Aramid Bridge",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["chain", "symbol", "amount", "sender", "destinationAddress"],
+      "properties": {
+        "chain": {
+          "type": "string",
+          "enum": ["voi", "algorand"],
+          "description": "Source chain to bridge FROM"
+        },
+        "symbol": {
+          "type": "string",
+          "description": "Token symbol to bridge (e.g. VOI, ALGO, USDC, ETH, UNIT, POW)"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Amount in human-readable units (e.g. '10' for 10 VOI)"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender wallet address on source chain"
+        },
+        "destinationAddress": {
+          "type": "string",
+          "description": "Recipient wallet address on destination chain"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Base64-encoded unsigned transactions for signing via UluWalletMCP"
+    }
+  }
+]

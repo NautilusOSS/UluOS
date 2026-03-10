@@ -105,6 +105,21 @@
       "tags": ["naming", "identity", "resolution"],
       "visibility": "private",
       "description": "enVoi name service: name resolution, registration, profile lookup, reverse resolution"
+    },
+    {
+      "name": "aramid-bridge",
+      "version": "0.1.0",
+      "transport": "stdio",
+      "command": "node",
+      "args": ["../AramidBridgeMCP/index.js"],
+      "baseUrl": "http://aramid-bridge-mcp:3008",
+      "layer": "protocol",
+      "healthPath": "/health",
+      "capabilitiesPath": "/capabilities",
+      "chains": ["voi-mainnet", "algorand-mainnet"],
+      "tags": ["bridge", "cross-chain", "defi"],
+      "visibility": "private",
+      "description": "Aramid Bridge: cross-chain bridging of native tokens and ASAs between Voi and Algorand"
     }
   ]
 }

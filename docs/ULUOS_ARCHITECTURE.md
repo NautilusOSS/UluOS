@@ -8,7 +8,7 @@
 
                │
           Protocol Layer
-       DorkFiMCP | EnvoiMCP
+  DorkFiMCP | EnvoiMCP | AramidMCP
 
                │
        Ecosystem Meaning Layer

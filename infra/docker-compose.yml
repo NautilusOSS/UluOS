@@ -55,6 +55,8 @@ services:
         condition: service_healthy
       envoi-mcp:
         condition: service_healthy
+      aramid-bridge-mcp:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
       interval: 10s
@@ -132,6 +134,15 @@ services:
     healthcheck:
       <<: *mcp-healthcheck
       test: ["CMD", "wget", "-qO-", "http://localhost:3007/health"]
+
+  aramid-bridge-mcp:
+    <<: *mcp-stub
+    environment:
+      PORT: 3008
+      SERVICE_NAME: aramid-bridge
+    healthcheck:
+      <<: *mcp-healthcheck
+      test: ["CMD", "wget", "-qO-", "http://localhost:3008/health"]
 
   # --- Node Services (disabled by default for local dev) ---
   # Uncomment when running with real algod nodes:
