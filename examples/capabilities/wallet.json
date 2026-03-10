@@ -1,0 +1,337 @@
+[
+  {
+    "name": "wallet.wallet_list_signers",
+    "service": "wallet",
+    "tool": "wallet_list_signers",
+    "description": "List all registered signers with summary info",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": true,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    },
+    "response": {
+      "type": "object",
+      "description": "List of signers with summary info"
+    }
+  },
+  {
+    "name": "wallet.wallet_get_signer",
+    "service": "wallet",
+    "tool": "wallet_get_signer",
+    "description": "Get full signer record by signerId",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": true,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["signerId"],
+      "properties": {
+        "signerId": {
+          "type": "string",
+          "description": "Signer identifier"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Full signer record"
+    }
+  },
+  {
+    "name": "wallet.wallet_create_hot_signer",
+    "service": "wallet",
+    "tool": "wallet_create_hot_signer",
+    "description": "Generate a new hot signer with a fresh keypair for automation, relays, or agent operations",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["signerId"],
+      "properties": {
+        "signerId": {
+          "type": "string",
+          "description": "Unique identifier for the signer"
+        },
+        "nickname": {
+          "type": "string",
+          "description": "Short nickname"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description"
+        },
+        "policy": {
+          "type": "object",
+          "description": "Signer policy constraints",
+          "properties": {
+            "maxTransactionsPerRequest": { "type": "integer", "exclusiveMinimum": 0 },
+            "allowRekey": { "type": "boolean" },
+            "allowCloseRemainderTo": { "type": "boolean" },
+            "allowAssetCloseTo": { "type": "boolean" },
+            "expiresAt": { "type": ["string", "null"], "format": "date-time" }
+          }
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Created signer record with address"
+    }
+  },
+  {
+    "name": "wallet.wallet_import_hot_signer",
+    "service": "wallet",
+    "tool": "wallet_import_hot_signer",
+    "description": "Import an existing account as a hot signer from a 25-word Algorand mnemonic",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["signerId", "mnemonic"],
+      "properties": {
+        "signerId": {
+          "type": "string",
+          "description": "Unique identifier for the signer"
+        },
+        "mnemonic": {
+          "type": "string",
+          "description": "25-word Algorand mnemonic phrase"
+        },
+        "nickname": {
+          "type": "string",
+          "description": "Short nickname"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description"
+        },
+        "policy": {
+          "type": "object",
+          "description": "Signer policy constraints",
+          "properties": {
+            "maxTransactionsPerRequest": { "type": "integer", "exclusiveMinimum": 0 },
+            "allowRekey": { "type": "boolean" },
+            "allowCloseRemainderTo": { "type": "boolean" },
+            "allowAssetCloseTo": { "type": "boolean" },
+            "expiresAt": { "type": ["string", "null"], "format": "date-time" }
+          }
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Imported signer record"
+    }
+  },
+  {
+    "name": "wallet.wallet_create_lsig_signer",
+    "service": "wallet",
+    "tool": "wallet_create_lsig_signer",
+    "description": "Create a LogicSig signer from a compiled TEAL program. Optionally delegate from an existing hot signer.",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["signerId", "program"],
+      "properties": {
+        "signerId": {
+          "type": "string",
+          "description": "Unique identifier for the signer"
+        },
+        "program": {
+          "type": "string",
+          "description": "Base64-encoded compiled TEAL program bytecode"
+        },
+        "delegatorSignerId": {
+          "type": "string",
+          "description": "SignerId of an existing hot signer to delegate authority from"
+        },
+        "nickname": {
+          "type": "string",
+          "description": "Short nickname"
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description"
+        },
+        "policy": {
+          "type": "object",
+          "description": "Signer policy constraints",
+          "properties": {
+            "maxTransactionsPerRequest": { "type": "integer", "exclusiveMinimum": 0 },
+            "allowRekey": { "type": "boolean" },
+            "allowCloseRemainderTo": { "type": "boolean" },
+            "allowAssetCloseTo": { "type": "boolean" },
+            "expiresAt": { "type": ["string", "null"], "format": "date-time" }
+          }
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Created LogicSig signer record"
+    }
+  },
+  {
+    "name": "wallet.wallet_delete_signer",
+    "service": "wallet",
+    "tool": "wallet_delete_signer",
+    "description": "Delete a signer and its key material",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["signerId"],
+      "properties": {
+        "signerId": {
+          "type": "string",
+          "description": "Signer identifier to delete"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Deletion confirmation"
+    }
+  },
+  {
+    "name": "wallet.wallet_update_signer",
+    "service": "wallet",
+    "tool": "wallet_update_signer",
+    "description": "Update a signer's metadata or policy. Only provided fields are changed.",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["signerId"],
+      "properties": {
+        "signerId": {
+          "type": "string",
+          "description": "Signer identifier to update"
+        },
+        "nickname": {
+          "type": "string",
+          "description": "New nickname"
+        },
+        "description": {
+          "type": "string",
+          "description": "New description"
+        },
+        "policy": {
+          "type": "object",
+          "description": "New policy (replaces existing)",
+          "properties": {
+            "maxTransactionsPerRequest": { "type": "integer", "exclusiveMinimum": 0 },
+            "allowRekey": { "type": "boolean" },
+            "allowCloseRemainderTo": { "type": "boolean" },
+            "allowAssetCloseTo": { "type": "boolean" },
+            "expiresAt": { "type": ["string", "null"], "format": "date-time" }
+          }
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Updated signer record"
+    }
+  },
+  {
+    "name": "wallet.wallet_sign_transactions",
+    "service": "wallet",
+    "tool": "wallet_sign_transactions",
+    "description": "Sign an array of unsigned transactions. Enforces signer policy before signing. Accepts base64-encoded unsigned transaction bytes and returns base64-encoded signed transaction bytes.",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["signerId", "transactions"],
+      "properties": {
+        "signerId": {
+          "type": "string",
+          "description": "Signer to use for signing"
+        },
+        "transactions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Array of base64-encoded unsigned transaction bytes"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Array of base64-encoded signed transaction bytes"
+    }
+  },
+  {
+    "name": "wallet.wallet_sign_bytes",
+    "service": "wallet",
+    "tool": "wallet_sign_bytes",
+    "description": "Sign arbitrary bytes with a hot signer. Returns an Ed25519 signature. The data is prefixed with 'MX' before signing per Algorand convention.",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["signerId", "data"],
+      "properties": {
+        "signerId": {
+          "type": "string",
+          "description": "Hot signer to use for signing"
+        },
+        "data": {
+          "type": "string",
+          "description": "Base64-encoded bytes to sign"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Ed25519 signature"
+    }
+  }
+]

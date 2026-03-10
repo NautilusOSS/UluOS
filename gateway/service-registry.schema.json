@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://uluos.io/schemas/service-registry.json",
+  "title": "UluOS Service Registry",
+  "description": "Schema for the gateway service registry configuration file",
+  "type": "object",
+  "required": ["version", "services"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Registry schema version",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "services": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/service" },
+      "minItems": 1
+    }
+  },
+  "$defs": {
+    "service": {
+      "type": "object",
+      "required": ["name", "version", "baseUrl", "layer", "healthPath"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique service identifier",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "baseUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "Internal base URL on the Docker network"
+        },
+        "layer": {
+          "type": "string",
+          "enum": ["infrastructure", "ecosystem", "protocol"],
+          "description": "Architecture layer this service belongs to"
+        },
+        "healthPath": {
+          "type": "string",
+          "default": "/health"
+        },
+        "capabilitiesPath": {
+          "type": "string",
+          "default": "/capabilities"
+        },
+        "chains": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Supported blockchain networks"
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "visibility": {
+          "type": "string",
+          "enum": ["public", "private", "internal"],
+          "default": "private",
+          "description": "Whether this service can be called directly by external clients"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

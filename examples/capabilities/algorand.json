@@ -1,0 +1,337 @@
+[
+  {
+    "name": "algorand.get_protocols",
+    "service": "algorand",
+    "tool": "get_protocols",
+    "description": "List all known Algorand protocols with type and description",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Filter by protocol type (dex, lending, naming-service, bridge, etc.)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "protocols": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "type": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "algorand.get_protocol",
+    "service": "algorand",
+    "tool": "get_protocol",
+    "description": "Get detailed information about a specific Algorand protocol by ID",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "protocolId": {
+          "type": "string",
+          "description": "Protocol identifier (e.g. tinyman, nfdomains, folks-finance)"
+        }
+      },
+      "required": ["protocolId"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    }
+  },
+  {
+    "name": "algorand.get_protocol_contracts",
+    "service": "algorand",
+    "tool": "get_protocol_contracts",
+    "description": "List all known application contracts for an Algorand protocol",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "protocolId": {
+          "type": "string",
+          "description": "Protocol identifier (e.g. tinyman, nfdomains)"
+        }
+      },
+      "required": ["protocolId"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "contracts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "appId": { "type": "integer" },
+              "role": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "algorand.get_protocol_summary",
+    "service": "algorand",
+    "tool": "get_protocol_summary",
+    "description": "Get a concise agent-friendly summary of an Algorand protocol including its purpose, contracts, and assets",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "protocolId": {
+          "type": "string",
+          "description": "Protocol identifier (e.g. tinyman, folks-finance)"
+        }
+      },
+      "required": ["protocolId"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "summary": { "type": "string" }
+      }
+    }
+  },
+  {
+    "name": "algorand.identify_application",
+    "service": "algorand",
+    "tool": "identify_application",
+    "description": "Identify an Algorand application by ID — returns protocol, role, type, and description if known",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "appId": {
+          "type": "integer",
+          "description": "Application ID on Algorand"
+        }
+      },
+      "required": ["appId"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "protocol": { "type": "string" },
+        "role": { "type": "string" },
+        "type": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    }
+  },
+  {
+    "name": "algorand.identify_asset",
+    "service": "algorand",
+    "tool": "identify_asset",
+    "description": "Identify an Algorand asset by ID — returns name, symbol, type, protocol association, and tags if known",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "assetId": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Asset ID on Algorand (0 for ALGO)"
+        }
+      },
+      "required": ["assetId"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "symbol": { "type": "string" },
+        "type": { "type": "string" },
+        "protocol": { "type": "string" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  },
+  {
+    "name": "algorand.get_contract_role",
+    "service": "algorand",
+    "tool": "get_contract_role",
+    "description": "Get the known protocol role for an Algorand application (e.g. amm-router, name-registry, lending-pool)",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "appId": {
+          "type": "integer",
+          "description": "Application ID on Algorand"
+        }
+      },
+      "required": ["appId"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "role": { "type": "string" },
+        "purpose": { "type": "string" }
+      }
+    }
+  },
+  {
+    "name": "algorand.resolve_name",
+    "service": "algorand",
+    "tool": "resolve_name",
+    "description": "Resolve an Algorand name (e.g. 'example.algo') to its address and metadata from the static registry",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Algorand name to resolve (e.g. 'pera.algo')"
+        }
+      },
+      "required": ["name"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "address": { "type": "string" },
+        "metadata": { "type": "object" }
+      }
+    }
+  },
+  {
+    "name": "algorand.reverse_resolve_address",
+    "service": "algorand",
+    "tool": "reverse_resolve_address",
+    "description": "Look up well-known Algorand names associated with an address from the static registry",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "Algorand wallet address to reverse-resolve"
+        }
+      },
+      "required": ["address"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "names": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  },
+  {
+    "name": "algorand.search_names",
+    "service": "algorand",
+    "tool": "search_names",
+    "description": "Search the static Algorand name registry by pattern. Returns matching .algo names.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "pattern": {
+          "type": "string",
+          "description": "Search pattern (substring match against registered names)"
+        }
+      },
+      "required": ["pattern"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "matches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "address": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,333 @@
+[
+  {
+    "name": "voi.get_protocols",
+    "service": "voi",
+    "tool": "get_protocols",
+    "description": "List all known Voi ecosystem protocols with type and description",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Filter by protocol type (dex, bridge, naming-service, nft-marketplace, etc.)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "protocols": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "type": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "voi.get_protocol",
+    "service": "voi",
+    "tool": "get_protocol",
+    "description": "Get detailed information about a specific Voi ecosystem protocol by ID",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "protocolId": {
+          "type": "string",
+          "description": "Protocol identifier (e.g. humble-swap, envoi, aramid-bridge)"
+        }
+      },
+      "required": ["protocolId"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    }
+  },
+  {
+    "name": "voi.get_protocol_contracts",
+    "service": "voi",
+    "tool": "get_protocol_contracts",
+    "description": "List all known application contracts for a Voi protocol",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "protocolId": {
+          "type": "string",
+          "description": "Protocol identifier (e.g. humble-swap, envoi, aramid-bridge)"
+        }
+      },
+      "required": ["protocolId"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "contracts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "appId": { "type": "integer" },
+              "role": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "voi.get_protocol_summary",
+    "service": "voi",
+    "tool": "get_protocol_summary",
+    "description": "Get a human-readable summary of a Voi protocol including its purpose, contracts, and assets",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "protocolId": {
+          "type": "string",
+          "description": "Protocol identifier (e.g. humble-swap, envoi, aramid-bridge)"
+        }
+      },
+      "required": ["protocolId"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "summary": { "type": "string" }
+      }
+    }
+  },
+  {
+    "name": "voi.identify_application",
+    "service": "voi",
+    "tool": "identify_application",
+    "description": "Identify a Voi application by ID — returns protocol, role, type, and description if known",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "appId": {
+          "type": "integer",
+          "description": "Application ID on Voi"
+        }
+      },
+      "required": ["appId"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "protocol": { "type": "string" },
+        "role": { "type": "string" },
+        "type": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    }
+  },
+  {
+    "name": "voi.identify_asset",
+    "service": "voi",
+    "tool": "identify_asset",
+    "description": "Identify a Voi asset by ID — returns name, symbol, type, protocol, and category if known",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "assetId": {
+          "type": "integer",
+          "description": "Asset or ARC-200 contract ID on Voi"
+        }
+      },
+      "required": ["assetId"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "symbol": { "type": "string" },
+        "type": { "type": "string" },
+        "protocol": { "type": "string" },
+        "category": { "type": "string" }
+      }
+    }
+  },
+  {
+    "name": "voi.get_contract_role",
+    "service": "voi",
+    "tool": "get_contract_role",
+    "description": "Get the role and purpose of a specific contract on Voi (e.g. liquidity-pool, bridge, registry)",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "appId": {
+          "type": "integer",
+          "description": "Application ID on Voi"
+        }
+      },
+      "required": ["appId"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "role": { "type": "string" },
+        "purpose": { "type": "string" }
+      }
+    }
+  },
+  {
+    "name": "voi.resolve_name",
+    "service": "voi",
+    "tool": "resolve_name",
+    "description": "Resolve an enVoi name (e.g. 'shelly.voi') to its address and metadata from the static registry",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "enVoi name to resolve (e.g. 'shelly.voi')"
+        }
+      },
+      "required": ["name"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "address": { "type": "string" },
+        "metadata": { "type": "object" }
+      }
+    }
+  },
+  {
+    "name": "voi.reverse_resolve_address",
+    "service": "voi",
+    "tool": "reverse_resolve_address",
+    "description": "Look up well-known enVoi names associated with a Voi address from the static registry",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "Voi wallet address to reverse-resolve"
+        }
+      },
+      "required": ["address"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "names": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  },
+  {
+    "name": "voi.search_names",
+    "service": "voi",
+    "tool": "search_names",
+    "description": "Search the static enVoi name registry by pattern",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "pattern": {
+          "type": "string",
+          "description": "Search pattern (substring match against registered names)"
+        }
+      },
+      "required": ["pattern"]
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "matches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "address": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+]

@@ -1,0 +1,190 @@
+[
+  {
+    "name": "broadcast.broadcast_transactions",
+    "service": "broadcast",
+    "tool": "broadcast_transactions",
+    "description": "Submit signed transaction blobs to the network and return their transaction IDs",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": false,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "txns"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier (e.g. voi-mainnet, algorand-mainnet)"
+        },
+        "txns": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Array of base64-encoded signed transactions"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Transaction IDs for submitted transactions"
+    }
+  },
+  {
+    "name": "broadcast.get_transaction_status",
+    "service": "broadcast",
+    "tool": "get_transaction_status",
+    "description": "Check the pending status of a transaction by its ID",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "txid"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "txid": {
+          "type": "string",
+          "description": "Transaction ID to look up"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Pending transaction status"
+    }
+  },
+  {
+    "name": "broadcast.wait_for_confirmation",
+    "service": "broadcast",
+    "tool": "wait_for_confirmation",
+    "description": "Wait for a transaction to be confirmed within a number of rounds",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "txid"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "txid": {
+          "type": "string",
+          "description": "Transaction ID to wait on"
+        },
+        "rounds": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "default": 5,
+          "description": "Max rounds to wait (default 5)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Confirmation result with round and block info"
+    }
+  },
+  {
+    "name": "broadcast.get_network_status",
+    "service": "broadcast",
+    "tool": "get_network_status",
+    "description": "Return current node status for a network (last round, sync state)",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "required": ["network"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Node status with last round and sync state"
+    }
+  },
+  {
+    "name": "broadcast.get_suggested_params",
+    "service": "broadcast",
+    "tool": "get_suggested_params",
+    "description": "Fetch suggested transaction parameters (fee, validity window, genesis info)",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "required": ["network"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Suggested params with fee and validity window"
+    }
+  },
+  {
+    "name": "broadcast.simulate_transactions",
+    "service": "broadcast",
+    "tool": "simulate_transactions",
+    "description": "Simulate signed transactions without broadcasting to check if they would succeed",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "txns"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "txns": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Array of base64-encoded signed transactions"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Simulation result indicating success or failure"
+    }
+  }
+]

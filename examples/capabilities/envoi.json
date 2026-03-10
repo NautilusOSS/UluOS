@@ -1,0 +1,169 @@
+[
+  {
+    "name": "envoi.resolve_name",
+    "service": "envoi",
+    "tool": "resolve_name",
+    "description": "Resolve an enVoi name (e.g. 'shelly.voi') to its on-chain address and profile metadata",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "enVoi name to resolve (e.g. 'shelly.voi')"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Resolved address and associated metadata"
+    }
+  },
+  {
+    "name": "envoi.reverse_resolve",
+    "service": "envoi",
+    "tool": "reverse_resolve",
+    "description": "Reverse-resolve a Voi address to its primary enVoi name and any aliases",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["address"],
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "Voi wallet address to reverse-resolve"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Primary name and list of all names pointing to this address"
+    }
+  },
+  {
+    "name": "envoi.get_profile",
+    "service": "envoi",
+    "tool": "get_profile",
+    "description": "Get the full on-chain profile for an enVoi name including avatar, socials, and custom properties",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "enVoi name (e.g. 'shelly.voi')"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Full profile including avatar URL, social handles, and custom metadata"
+    }
+  },
+  {
+    "name": "envoi.search_names",
+    "service": "envoi",
+    "tool": "search_names",
+    "description": "Search registered enVoi names by pattern with optional filters",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["pattern"],
+      "properties": {
+        "pattern": {
+          "type": "string",
+          "description": "Search pattern (substring match against registered names)"
+        },
+        "limit": {
+          "type": "integer",
+          "default": 50,
+          "description": "Max results to return (default 50)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "List of matching names with addresses"
+    }
+  },
+  {
+    "name": "envoi.check_availability",
+    "service": "envoi",
+    "tool": "check_availability",
+    "description": "Check whether an enVoi name is available for registration",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "enVoi name to check (e.g. 'shelly.voi')"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Availability status and, if taken, the current owner address"
+    }
+  },
+  {
+    "name": "envoi.get_registrations",
+    "service": "envoi",
+    "tool": "get_registrations",
+    "description": "List all enVoi names registered to a given address",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["address"],
+      "properties": {
+        "address": {
+          "type": "string",
+          "description": "Voi wallet address"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "List of names owned by this address with registration details"
+    }
+  }
+]

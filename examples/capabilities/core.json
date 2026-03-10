@@ -1,0 +1,502 @@
+[
+  {
+    "name": "core.get_network_status",
+    "service": "core",
+    "tool": "get_network_status",
+    "description": "Get current node status including last round, sync state, and versions",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "required": ["network"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier (e.g. algorand-mainnet, voi-mainnet)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Node status with last round, sync state, and version info"
+    }
+  },
+  {
+    "name": "core.get_suggested_params",
+    "service": "core",
+    "tool": "get_suggested_params",
+    "description": "Get suggested transaction parameters including fee, validity window, and genesis info",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "required": ["network"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Suggested params with fee, firstValid, lastValid, genesis ID and hash"
+    }
+  },
+  {
+    "name": "core.get_block",
+    "service": "core",
+    "tool": "get_block",
+    "description": "Get block information by round number",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "round"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "round": {
+          "type": "integer",
+          "description": "Block round number"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Block data including header and transactions"
+    }
+  },
+  {
+    "name": "core.get_account",
+    "service": "core",
+    "tool": "get_account",
+    "description": "Get account information including balance, assets, and auth address",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "address"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "address": {
+          "type": "string",
+          "description": "Account public key / address"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Account info with balance, assets, and auth address"
+    }
+  },
+  {
+    "name": "core.get_asset",
+    "service": "core",
+    "tool": "get_asset",
+    "description": "Get asset information and configuration by ID",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "assetId"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "assetId": {
+          "type": "integer",
+          "description": "Asset ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Asset configuration (params, metadata)"
+    }
+  },
+  {
+    "name": "core.get_application",
+    "service": "core",
+    "tool": "get_application",
+    "description": "Get application information including global state and programs",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "appId"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "appId": {
+          "type": "integer",
+          "description": "Application ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Application info with global state and programs"
+    }
+  },
+  {
+    "name": "core.get_application_boxes",
+    "service": "core",
+    "tool": "get_application_boxes",
+    "description": "List all application boxes",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "appId"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "appId": {
+          "type": "integer",
+          "description": "Application ID"
+        },
+        "maxBoxes": {
+          "type": "integer",
+          "description": "Maximum number of boxes to return"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "List of box names for the application"
+    }
+  },
+  {
+    "name": "core.get_application_box",
+    "service": "core",
+    "tool": "get_application_box",
+    "description": "Get a specific application box by name",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "appId", "boxName"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "appId": {
+          "type": "integer",
+          "description": "Application ID"
+        },
+        "boxName": {
+          "type": "string",
+          "description": "Box name (base64-encoded)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Box name and value"
+    }
+  },
+  {
+    "name": "core.get_transaction",
+    "service": "core",
+    "tool": "get_transaction",
+    "description": "Look up a confirmed transaction by ID from the indexer",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "txId"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "txId": {
+          "type": "string",
+          "description": "Transaction ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Confirmed transaction details"
+    }
+  },
+  {
+    "name": "core.search_transactions",
+    "service": "core",
+    "tool": "search_transactions",
+    "description": "Search transaction history with filters",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "address": {
+          "type": "string",
+          "description": "Filter by account address"
+        },
+        "addressRole": {
+          "type": "string",
+          "description": "Address role: sender or receiver"
+        },
+        "assetId": {
+          "type": "integer",
+          "description": "Filter by asset ID"
+        },
+        "applicationId": {
+          "type": "integer",
+          "description": "Filter by application ID"
+        },
+        "minRound": {
+          "type": "integer",
+          "description": "Minimum round"
+        },
+        "maxRound": {
+          "type": "integer",
+          "description": "Maximum round"
+        },
+        "afterTime": {
+          "type": "string",
+          "description": "Only return transactions after this RFC 3339 time"
+        },
+        "beforeTime": {
+          "type": "string",
+          "description": "Only return transactions before this RFC 3339 time"
+        },
+        "txType": {
+          "type": "string",
+          "description": "Transaction type filter (pay, keyreg, acfg, axfer, afrz, appl, stpf)"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum results to return"
+        },
+        "next": {
+          "type": "string",
+          "description": "Pagination token"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Search results with transactions and pagination"
+    }
+  },
+  {
+    "name": "core.compile_teal",
+    "service": "core",
+    "tool": "compile_teal",
+    "description": "Compile TEAL source code into bytecode",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "source"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "source": {
+          "type": "string",
+          "description": "TEAL source code"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Compilation result with bytecode"
+    }
+  },
+  {
+    "name": "core.disassemble_teal",
+    "service": "core",
+    "tool": "disassemble_teal",
+    "description": "Disassemble TEAL bytecode back into source",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "bytecode"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "bytecode": {
+          "type": "string",
+          "description": "Base64-encoded TEAL bytecode"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Disassembled TEAL source"
+    }
+  },
+  {
+    "name": "core.simulate_transactions",
+    "service": "core",
+    "tool": "simulate_transactions",
+    "description": "Simulate signed or unsigned transactions without broadcasting",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["network", "txnBytes"],
+      "properties": {
+        "network": {
+          "type": "string",
+          "description": "Network identifier"
+        },
+        "txnBytes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of base64-encoded transaction bytes"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Simulation result with success/failure and execution trace"
+    }
+  },
+  {
+    "name": "core.decode_transaction",
+    "service": "core",
+    "tool": "decode_transaction",
+    "description": "Decode a base64-encoded unsigned transaction into JSON",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "required": ["txnBytes"],
+      "properties": {
+        "txnBytes": {
+          "type": "string",
+          "description": "Base64-encoded unsigned transaction bytes (msgpack)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Decoded transaction as JSON"
+    }
+  },
+  {
+    "name": "core.decode_signed_transaction",
+    "service": "core",
+    "tool": "decode_signed_transaction",
+    "description": "Decode a base64-encoded signed transaction into JSON",
+    "chains": ["voi-mainnet", "algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "required": ["txnBytes"],
+      "properties": {
+        "txnBytes": {
+          "type": "string",
+          "description": "Base64-encoded signed transaction bytes (msgpack)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Decoded signed transaction as JSON"
+    }
+  }
+]

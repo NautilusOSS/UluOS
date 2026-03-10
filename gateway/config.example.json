@@ -1,0 +1,28 @@
+{
+  "port": 3000,
+  "servicesConfigPath": "./services.json",
+  "auth": {
+    "mode": "api_key",
+    "headerName": "X-API-Key"
+  },
+  "rateLimit": {
+    "enabled": true,
+    "windowMs": 60000,
+    "maxRequests": 120
+  },
+  "pricing": {
+    "mode": "disabled",
+    "x402": {
+      "enabled": false,
+      "paymentAddress": ""
+    }
+  },
+  "telemetry": {
+    "enabled": true,
+    "logLevel": "info"
+  },
+  "cors": {
+    "enabled": true,
+    "origins": ["http://localhost:*"]
+  }
+}
