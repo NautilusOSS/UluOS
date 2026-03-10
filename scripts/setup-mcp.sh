@@ -2,43 +2,52 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-
-MCP_STDIO="$REPO_ROOT/gateway/src/mcp-stdio.js"
+REPO_ROOT="$SCRIPT_DIR/.."
 SERVICES_JSON="$REPO_ROOT/gateway/services.json"
-CAPABILITIES_DIR="$REPO_ROOT/examples/capabilities"
 CURSOR_MCP="$HOME/.cursor/mcp.json"
-
-if [ ! -f "$MCP_STDIO" ]; then
-  echo "ERROR: $MCP_STDIO not found. Run this from the UluOS repo root."
-  exit 1
-fi
 
 mkdir -p "$(dirname "$CURSOR_MCP")"
 
 node -e "
 const fs = require('fs');
-const path = '$CURSOR_MCP';
-const stdio = '$MCP_STDIO';
-const svcJson = '$SERVICES_JSON';
-const capDir = '$CAPABILITIES_DIR';
+const path = require('path');
+
+const cursorMcpPath = '$CURSOR_MCP';
+const servicesPath = '$SERVICES_JSON';
+const repoRoot = path.resolve('$REPO_ROOT');
+
+const services = JSON.parse(fs.readFileSync(servicesPath, 'utf8'));
 
 let config = { mcpServers: {} };
-if (fs.existsSync(path)) {
-  try { config = JSON.parse(fs.readFileSync(path, 'utf8')); } catch {}
+if (fs.existsSync(cursorMcpPath)) {
+  try { config = JSON.parse(fs.readFileSync(cursorMcpPath, 'utf8')); } catch {}
   if (!config.mcpServers) config.mcpServers = {};
 }
 
-config.mcpServers.uluos = {
-  command: 'node',
-  args: [stdio],
-  env: {
-    SERVICES_CONFIG: svcJson,
-    CAPABILITIES_DIR: capDir
+let registered = 0;
+for (const svc of services.services) {
+  if (svc.transport !== 'stdio') continue;
+
+  const entryPoint = (svc.args || [])[0];
+  if (!entryPoint) continue;
+
+  // Resolve the entry point relative to the repo root
+  const absEntry = path.resolve(repoRoot, entryPoint);
+  if (!fs.existsSync(absEntry)) {
+    console.error('  SKIP  ' + svc.name + '  (' + absEntry + ' not found)');
+    continue;
   }
-};
 
-fs.writeFileSync(path, JSON.stringify(config, null, 2) + '\n');
+  config.mcpServers[svc.name] = {
+    command: svc.command,
+    args: [absEntry],
+    cwd: path.dirname(absEntry)
+  };
+  registered++;
+  console.log('  OK    ' + svc.name + '  → ' + absEntry);
+}
+
+fs.writeFileSync(cursorMcpPath, JSON.stringify(config, null, 2) + '\n');
+console.log('');
+console.log('Registered ' + registered + ' MCP servers (stdio) in ' + cursorMcpPath);
 "
-
-echo "Registered UluOS MCP server in $CURSOR_MCP"

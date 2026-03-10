@@ -3,8 +3,31 @@ const path = require("path");
 
 function loadJson(filePath) {
   const resolved = path.resolve(filePath);
-  if (!fs.existsSync(resolved)) return null;
-  return JSON.parse(fs.readFileSync(resolved, "utf-8"));
+  try {
+    return JSON.parse(fs.readFileSync(resolved, "utf-8"));
+  } catch (err) {
+    if (err.code === "ENOENT") return null;
+    throw new Error(`Failed to load ${resolved}: ${err.message}`);
+  }
+}
+
+function validate(config) {
+  const errors = [];
+  if (typeof config.port !== "number" || config.port < 1 || config.port > 65535) {
+    errors.push(`Invalid port: ${config.port}`);
+  }
+  if (!config.auth || !["none", "api-key"].includes(config.auth.mode)) {
+    errors.push(`Invalid auth.mode: ${config.auth?.mode} (expected "none" or "api-key")`);
+  }
+  if (config.auth?.mode === "api-key" && config.apiKey === "change-me-in-production") {
+    errors.push("Refusing to start with default API key when auth is enabled — set ULUOS_API_KEY");
+  }
+  if (config.rateLimit?.enabled) {
+    if (!config.rateLimit.windowMs || !config.rateLimit.maxRequests) {
+      errors.push("rateLimit is enabled but windowMs or maxRequests is missing");
+    }
+  }
+  return errors;
 }
 
 function load() {
@@ -22,13 +45,24 @@ function load() {
     cors: { enabled: true, origins: ["*"] },
   };
 
-  const config = { ...defaults, ...loadJson(configPath) };
+  const fileConfig = loadJson(configPath) || {};
+  const config = {
+    ...defaults,
+    ...fileConfig,
+    auth: { ...defaults.auth, ...fileConfig.auth },
+    rateLimit: { ...defaults.rateLimit, ...fileConfig.rateLimit },
+  };
   config.port = parseInt(process.env.PORT, 10) || config.port;
 
   const servicesFile = loadJson(servicesPath);
   config.services = servicesFile ? servicesFile.services : [];
 
   config.apiKey = process.env.ULUOS_API_KEY || "change-me-in-production";
+
+  const errors = validate(config);
+  if (errors.length > 0) {
+    throw new Error(`Config validation failed:\n  - ${errors.join("\n  - ")}`);
+  }
 
   return config;
 }

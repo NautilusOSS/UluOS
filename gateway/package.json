@@ -7,7 +7,9 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "node --watch src/index.js",
-    "mcp": "node src/mcp-stdio.js"
+    "mcp": "node src/mcp-stdio.js",
+    "test": "node --test 'test/*.test.js'",
+    "lint": "node --check src/**/*.js"
   },
   "engines": {
     "node": ">=20"

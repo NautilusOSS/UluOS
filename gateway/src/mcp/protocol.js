@@ -29,6 +29,12 @@ class McpProtocol {
         return this._listTools(message);
       case "tools/call":
         return this._callTool(message);
+      case "resources/list":
+        return jsonRpcResult(message.id, { resources: [] });
+      case "resources/read":
+        return jsonRpcError(message.id, -32602, "No resources available");
+      case "prompts/list":
+        return jsonRpcResult(message.id, { prompts: [] });
       default:
         return jsonRpcError(message.id, -32601, `Unknown method: ${message.method}`);
     }
@@ -50,7 +56,6 @@ class McpProtocol {
   }
 
   _listTools(message) {
-    const cursor = message.params?.cursor;
     const tools = this._tools.list();
     return jsonRpcResult(message.id, { tools });
   }
@@ -68,7 +73,7 @@ class McpProtocol {
     } catch (err) {
       logger.error({ msg: "tool call failed", tool: name, err: err.message });
       return jsonRpcResult(message.id, {
-        content: [{ type: "text", text: JSON.stringify({ error: err.message }) }],
+        content: [{ type: "text", text: err.message }],
         isError: true,
       });
     }

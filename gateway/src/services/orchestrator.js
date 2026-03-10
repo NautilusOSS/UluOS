@@ -1,6 +1,14 @@
 const envelope = require("../utils/envelope");
 const logger = require("../utils/logger");
 
+function extractArray(data, ...keys) {
+  if (!data) return null;
+  for (const key of keys) {
+    if (Array.isArray(data[key]) && data[key].length > 0) return data[key];
+  }
+  return Array.isArray(data) && data.length > 0 ? data : null;
+}
+
 async function dorkfiAction(registry, action, body, requestId) {
   const { chain, symbol, amount, sender, signerId, ...extra } = body;
 
@@ -25,8 +33,9 @@ async function dorkfiAction(registry, action, body, requestId) {
     return envelope.error("dorkfi", action, "BUILD_FAILED", err.message, { step: "build" });
   }
 
-  const unsignedTxns = buildResult.data?.txns || buildResult.data?.transactions || buildResult.data;
-  if (!Array.isArray(unsignedTxns) || unsignedTxns.length === 0) {
+  const buildData = buildResult.data;
+  const unsignedTxns = extractArray(buildData, "txns", "transactions");
+  if (!unsignedTxns || unsignedTxns.length === 0) {
     return envelope.error("dorkfi", action, "BUILD_FAILED",
       "No transactions returned from build step", { step: "build" });
   }
@@ -43,8 +52,9 @@ async function dorkfiAction(registry, action, body, requestId) {
     return envelope.error("wallet", action, "SIGN_FAILED", err.message, { step: "sign" });
   }
 
-  const signedTxns = signResult.data?.signedTransactions || signResult.data?.txns || signResult.data?.transactions || signResult.data;
-  if (!Array.isArray(signedTxns) || signedTxns.length === 0) {
+  const signData = signResult.data;
+  const signedTxns = extractArray(signData, "signedTransactions", "txns", "transactions");
+  if (!signedTxns || signedTxns.length === 0) {
     return envelope.error("wallet", action, "SIGN_FAILED",
       "No signed transactions returned", { step: "sign" });
   }
@@ -82,6 +92,9 @@ async function dorkfiAction(registry, action, body, requestId) {
       }
     } catch (err) {
       logger.warn({ requestId, step: "confirm", msg: "confirmation wait failed", err: err.message });
+      return envelope.error("broadcast", action, "CONFIRM_FAILED", err.message, {
+        step: "confirm", txids,
+      });
     }
   }
 

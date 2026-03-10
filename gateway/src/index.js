@@ -41,15 +41,24 @@ logger.info({
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json({ limit: "256kb" }));
 app.use(requestId());
 app.use(rateLimit(config));
 
 // MCP protocol (SSE transport, no auth — MCP handles its own session)
 app.use(sseRoutes(mcpProtocol));
 
+// Root info route
+app.get("/", (_req, res) => {
+  res.json({
+    service: "ulu-gateway",
+    version: "0.1.0",
+    endpoints: ["/health", "/services", "/capabilities", "/pricing", "/mcp/sse"],
+  });
+});
+
 // Public routes (no auth)
-app.use(healthRoutes());
+app.use(healthRoutes(registry));
 app.use(servicesRoutes(registry));
 app.use(capabilitiesRoutes(capabilities));
 app.use(pricingRoutes());

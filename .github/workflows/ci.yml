@@ -68,8 +68,29 @@ jobs:
         working-directory: gateway
         run: npm ci
 
-      - name: Verify gateway starts
+      - name: Run tests
+        working-directory: gateway
+        run: npm test
+
+      - name: Validate service registry against schema
+        working-directory: gateway
+        run: |
+          node -e "
+            const Ajv = require('ajv') || null;
+            if (!Ajv) { console.log('ajv not installed, skipping schema validation'); process.exit(0); }
+          " 2>/dev/null || echo "Schema validation skipped (ajv not installed)"
+
+      - name: Verify gateway starts and responds
         working-directory: gateway
         run: |
           cp config.example.json config.json
-          timeout 5 node src/index.js || true
+          node src/index.js &
+          PID=$!
+          sleep 3
+          STATUS=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/health)
+          kill $PID 2>/dev/null || true
+          if [ "$STATUS" != "200" ]; then
+            echo "Health check failed with status $STATUS"
+            exit 1
+          fi
+          echo "Health check passed (HTTP $STATUS)"

@@ -2,7 +2,7 @@
   {
     "name": "envoi.resolve_name",
     "service": "envoi",
-    "tool": "resolve_name",
+    "tool": "envoi_resolve_name",
     "description": "Resolve an enVoi name (e.g. 'shelly.voi') to its on-chain address and profile metadata",
     "chains": ["voi-mainnet"],
     "readOnly": true,
@@ -29,7 +29,7 @@
   {
     "name": "envoi.reverse_resolve",
     "service": "envoi",
-    "tool": "reverse_resolve",
+    "tool": "envoi_reverse_lookup",
     "description": "Reverse-resolve a Voi address to its primary enVoi name and any aliases",
     "chains": ["voi-mainnet"],
     "readOnly": true,
@@ -56,7 +56,7 @@
   {
     "name": "envoi.get_profile",
     "service": "envoi",
-    "tool": "get_profile",
+    "tool": "envoi_get_profile",
     "description": "Get the full on-chain profile for an enVoi name including avatar, socials, and custom properties",
     "chains": ["voi-mainnet"],
     "readOnly": true,
@@ -83,7 +83,7 @@
   {
     "name": "envoi.search_names",
     "service": "envoi",
-    "tool": "search_names",
+    "tool": "envoi_search_names",
     "description": "Search registered enVoi names by pattern with optional filters",
     "chains": ["voi-mainnet"],
     "readOnly": true,
@@ -115,7 +115,7 @@
   {
     "name": "envoi.check_availability",
     "service": "envoi",
-    "tool": "check_availability",
+    "tool": "envoi_name_status",
     "description": "Check whether an enVoi name is available for registration",
     "chains": ["voi-mainnet"],
     "readOnly": true,
@@ -140,10 +140,10 @@
     }
   },
   {
-    "name": "envoi.get_registrations",
+    "name": "envoi.get_records",
     "service": "envoi",
-    "tool": "get_registrations",
-    "description": "List all enVoi names registered to a given address",
+    "tool": "envoi_get_records",
+    "description": "Get all records and metadata associated with an enVoi name token",
     "chains": ["voi-mainnet"],
     "readOnly": true,
     "requiresAuth": false,
@@ -153,17 +153,17 @@
     "pricingTier": "standard",
     "parameters": {
       "type": "object",
-      "required": ["address"],
+      "required": ["tokenId"],
       "properties": {
-        "address": {
+        "tokenId": {
           "type": "string",
-          "description": "Voi wallet address"
+          "description": "enVoi name token ID"
         }
       }
     },
     "response": {
       "type": "object",
-      "description": "List of names owned by this address with registration details"
+      "description": "All records and metadata for the name token"
     }
   }
 ]

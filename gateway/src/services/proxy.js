@@ -21,12 +21,28 @@ function forward(baseUrl, tool, body, timeoutMs = 30000) {
       (res) => {
         const chunks = [];
         res.on("data", (chunk) => chunks.push(chunk));
+        res.on("error", (err) => {
+          logger.error({ msg: "proxy response error", url: url.toString(), err: err.message });
+          reject(err);
+        });
         res.on("end", () => {
           const raw = Buffer.concat(chunks).toString();
+          let data;
           try {
-            resolve({ status: res.statusCode, data: JSON.parse(raw) });
+            data = JSON.parse(raw);
           } catch {
-            resolve({ status: res.statusCode, data: raw });
+            data = raw;
+          }
+          const result = { status: res.statusCode, data };
+          if (res.statusCode >= 400) {
+            const err = new Error(
+              (typeof data === "object" && data?.message) || `Upstream returned ${res.statusCode}`,
+            );
+            err.status = res.statusCode;
+            err.data = data;
+            reject(err);
+          } else {
+            resolve(result);
           }
         });
       },

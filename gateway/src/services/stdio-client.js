@@ -47,7 +47,12 @@ class StdioMcpClient {
     this._rl = readline.createInterface({ input: this._proc.stdout, terminal: false });
     this._rl.on("line", (line) => this._onLine(line));
 
-    await this._initialize();
+    try {
+      await this._initialize();
+    } catch (err) {
+      this._rejectAll(err);
+      throw err;
+    }
     this._ready = true;
     logger.info({ msg: "stdio client ready", service: this._name });
   }
@@ -137,7 +142,12 @@ class StdioMcpClient {
     if (!this._proc || this._proc.killed) {
       throw new Error(`${this._name}: process not running`);
     }
-    this._proc.stdin.write(JSON.stringify(obj) + "\n");
+    try {
+      this._proc.stdin.write(JSON.stringify(obj) + "\n");
+    } catch (err) {
+      logger.error({ msg: "stdin write failed", service: this._name, err: err.message });
+      throw new Error(`${this._name}: stdin write failed — ${err.message}`);
+    }
   }
 
   _onLine(line) {

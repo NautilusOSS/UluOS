@@ -11,8 +11,9 @@ function rateLimit(config) {
   setInterval(() => hits.clear(), windowMs);
 
   return (req, res, next) => {
+    const authHeader = (config.auth.headerName || "X-API-Key").toLowerCase();
     const key =
-      req.headers["x-api-key"] || req.ip || "anonymous";
+      req.headers[authHeader] || req.ip || "anonymous";
     const count = (hits.get(key) || 0) + 1;
     hits.set(key, count);
 
