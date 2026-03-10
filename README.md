@@ -44,13 +44,13 @@ A local-first integration environment for the Ulu MCP ecosystem. UluOS composes 
 One command to clone everything, install dependencies, and start the stack:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/MaidToShelly/UluOS/main/scripts/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/NautilusOSS/UluOS/main/scripts/bootstrap.sh | bash
 ```
 
 Or step by step:
 
 ```bash
-git clone git@github.com:MaidToShelly/UluOS.git && cd UluOS
+git clone git@github.com:NautilusOSS/UluOS.git && cd UluOS
 ./scripts/install-services.sh
 ./scripts/dev-up.sh
 ```
