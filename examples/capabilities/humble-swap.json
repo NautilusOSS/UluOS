@@ -1,0 +1,772 @@
+[
+  {
+    "name": "humble-swap.get_pools",
+    "service": "humble-swap",
+    "tool": "get_pools",
+    "description": "List Humble Swap pools with token pairs, liquidity, and volume data",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Filter pools containing this token symbol"
+        }
+      }
+    },
+    "response": {
+      "type": "array",
+      "description": "Pool list with token pairs, liquidity, and volume"
+    }
+  },
+  {
+    "name": "humble-swap.get_pool",
+    "service": "humble-swap",
+    "tool": "get_pool",
+    "description": "Get detailed on-chain info for a specific Humble Swap pool (balances, fees, LP supply)",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["poolId"],
+      "properties": {
+        "poolId": {
+          "type": "number",
+          "description": "Pool application ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Pool balances, fees, and LP supply"
+    }
+  },
+  {
+    "name": "humble-swap.get_pool_details",
+    "service": "humble-swap",
+    "tool": "get_pool_details",
+    "description": "Get detailed pool information from the Humble API including token pair, balances, and configuration",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["poolId"],
+      "properties": {
+        "poolId": {
+          "type": "number",
+          "description": "Pool application ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Pool details with token pair, balances, and configuration"
+    }
+  },
+  {
+    "name": "humble-swap.get_pool_analytics",
+    "service": "humble-swap",
+    "tool": "get_pool_analytics",
+    "description": "Get pool analytics including TVL, liquidity depth, and concentration metrics",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["poolId"],
+      "properties": {
+        "poolId": {
+          "type": "number",
+          "description": "Pool application ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "TVL, liquidity depth, and concentration metrics"
+    }
+  },
+  {
+    "name": "humble-swap.get_pool_stats",
+    "service": "humble-swap",
+    "tool": "get_pool_stats",
+    "description": "Get comprehensive statistics for a specific pool (volume, fees, APR, etc.)",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["poolId"],
+      "properties": {
+        "poolId": {
+          "type": "number",
+          "description": "Pool application ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Volume, fees, APR, and other pool statistics"
+    }
+  },
+  {
+    "name": "humble-swap.get_all_pools_stats",
+    "service": "humble-swap",
+    "tool": "get_all_pools_stats",
+    "description": "Get comprehensive statistics across all Humble Swap pools",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    },
+    "response": {
+      "type": "array",
+      "description": "Statistics for all pools"
+    }
+  },
+  {
+    "name": "humble-swap.compare_pools",
+    "service": "humble-swap",
+    "tool": "compare_pools",
+    "description": "Compare multiple pools side by side (liquidity, volume, fees, etc.)",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["poolIds"],
+      "properties": {
+        "poolIds": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 2,
+          "description": "Array of pool application IDs to compare"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Side-by-side pool comparison"
+    }
+  },
+  {
+    "name": "humble-swap.get_tokens",
+    "service": "humble-swap",
+    "tool": "get_tokens",
+    "description": "List tokens available on Humble Swap with contract IDs and decimals",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Filter by token symbol"
+        }
+      }
+    },
+    "response": {
+      "type": "array",
+      "description": "Token list with contract IDs and decimals"
+    }
+  },
+  {
+    "name": "humble-swap.get_tickers",
+    "service": "humble-swap",
+    "tool": "get_tickers",
+    "description": "Get price ticker data for Humble Swap trading pairs",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    },
+    "response": {
+      "type": "array",
+      "description": "Trading pair ticker data"
+    }
+  },
+  {
+    "name": "humble-swap.search_tokens",
+    "service": "humble-swap",
+    "tool": "search_tokens",
+    "description": "Search Humble Swap tokens by name or symbol",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "required": ["query"],
+      "properties": {
+        "query": {
+          "type": "string",
+          "description": "Search query (name or symbol)"
+        }
+      }
+    },
+    "response": {
+      "type": "array",
+      "description": "Matching tokens"
+    }
+  },
+  {
+    "name": "humble-swap.get_token_metadata",
+    "service": "humble-swap",
+    "tool": "get_token_metadata",
+    "description": "Get enriched metadata for a token including name, symbol, decimals, and additional info",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "required": ["assetId"],
+      "properties": {
+        "assetId": {
+          "type": "number",
+          "description": "Token asset / contract ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Token metadata"
+    }
+  },
+  {
+    "name": "humble-swap.get_token_stats",
+    "service": "humble-swap",
+    "tool": "get_token_stats",
+    "description": "Get comprehensive statistics for a specific token (volume, price change, holder count, etc.)",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["assetId"],
+      "properties": {
+        "assetId": {
+          "type": "number",
+          "description": "Token asset / contract ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Token volume, price change, holder count, and other statistics"
+    }
+  },
+  {
+    "name": "humble-swap.get_token_pools",
+    "service": "humble-swap",
+    "tool": "get_token_pools",
+    "description": "Get pool statistics for all pools containing a specific token",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["assetId"],
+      "properties": {
+        "assetId": {
+          "type": "number",
+          "description": "Token asset / contract ID"
+        }
+      }
+    },
+    "response": {
+      "type": "array",
+      "description": "Pool statistics for pools containing the token"
+    }
+  },
+  {
+    "name": "humble-swap.get_all_tokens_stats",
+    "service": "humble-swap",
+    "tool": "get_all_tokens_stats",
+    "description": "Get comprehensive statistics across all tokens on Humble Swap",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    },
+    "response": {
+      "type": "array",
+      "description": "Statistics for all tokens"
+    }
+  },
+  {
+    "name": "humble-swap.get_token_rankings",
+    "service": "humble-swap",
+    "tool": "get_token_rankings",
+    "description": "Get token rankings by volume, liquidity, price change, and other metrics",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    },
+    "response": {
+      "type": "object",
+      "description": "Token rankings across multiple metrics"
+    }
+  },
+  {
+    "name": "humble-swap.get_prices",
+    "service": "humble-swap",
+    "tool": "get_prices",
+    "description": "Get current prices for all tokens on Humble Swap",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    },
+    "response": {
+      "type": "object",
+      "description": "Current prices for all tokens"
+    }
+  },
+  {
+    "name": "humble-swap.get_token_price",
+    "service": "humble-swap",
+    "tool": "get_token_price",
+    "description": "Get current price data for a specific token",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "required": ["tokenId"],
+      "properties": {
+        "tokenId": {
+          "type": "number",
+          "description": "Token contract ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Current price data"
+    }
+  },
+  {
+    "name": "humble-swap.get_price_history",
+    "service": "humble-swap",
+    "tool": "get_price_history",
+    "description": "Get historical price data for a token over a given period",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["tokenId"],
+      "properties": {
+        "tokenId": {
+          "type": "number",
+          "description": "Token contract ID"
+        },
+        "period": {
+          "type": "string",
+          "description": "Time period (e.g. '24h', '7d', '30d')"
+        },
+        "interval": {
+          "type": "string",
+          "description": "Data point interval (e.g. '1h', '1d')"
+        }
+      }
+    },
+    "response": {
+      "type": "array",
+      "description": "Historical price data points"
+    }
+  },
+  {
+    "name": "humble-swap.get_price_trends",
+    "service": "humble-swap",
+    "tool": "get_price_trends",
+    "description": "Get price trend analytics for a token including momentum and moving averages",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["tokenId"],
+      "properties": {
+        "tokenId": {
+          "type": "number",
+          "description": "Token contract ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Trend analytics with momentum and moving averages"
+    }
+  },
+  {
+    "name": "humble-swap.get_price_aggregated",
+    "service": "humble-swap",
+    "tool": "get_price_aggregated",
+    "description": "Get aggregated price for a token across multiple pool sources",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["tokenId"],
+      "properties": {
+        "tokenId": {
+          "type": "number",
+          "description": "Token contract ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Aggregated price across multiple sources"
+    }
+  },
+  {
+    "name": "humble-swap.get_protocol_stats",
+    "service": "humble-swap",
+    "tool": "get_protocol_stats",
+    "description": "Get protocol-wide statistics for Humble Swap (total TVL, volume, number of pools, etc.)",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    },
+    "response": {
+      "type": "object",
+      "description": "Protocol-wide TVL, volume, and pool count"
+    }
+  },
+  {
+    "name": "humble-swap.get_arbitrage_opportunities",
+    "service": "humble-swap",
+    "tool": "get_arbitrage_opportunities",
+    "description": "Detect current arbitrage opportunities across Humble Swap pools",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    },
+    "response": {
+      "type": "array",
+      "description": "Detected arbitrage opportunities"
+    }
+  },
+  {
+    "name": "humble-swap.get_triangular_arbitrage",
+    "service": "humble-swap",
+    "tool": "get_triangular_arbitrage",
+    "description": "Detect triangular arbitrage opportunities (A->B->C->A cycles) across Humble Swap pools",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    },
+    "response": {
+      "type": "array",
+      "description": "Triangular arbitrage cycles"
+    }
+  },
+  {
+    "name": "humble-swap.get_swap_route",
+    "service": "humble-swap",
+    "tool": "get_swap_route",
+    "description": "Find all possible swap paths between two tokens, including multi-hop routes",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["tokenA", "tokenB"],
+      "properties": {
+        "tokenA": {
+          "type": "string",
+          "description": "Source token symbol or contract ID"
+        },
+        "tokenB": {
+          "type": "string",
+          "description": "Destination token symbol or contract ID"
+        }
+      }
+    },
+    "response": {
+      "type": "array",
+      "description": "Possible swap paths including multi-hop routes"
+    }
+  },
+  {
+    "name": "humble-swap.get_quote",
+    "service": "humble-swap",
+    "tool": "get_quote",
+    "description": "Simulate a swap and get a quote with expected output, rate, fee, price impact, and minimum received",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["fromToken", "toToken", "amount"],
+      "properties": {
+        "fromToken": {
+          "type": "string",
+          "description": "From token symbol or contract ID"
+        },
+        "toToken": {
+          "type": "string",
+          "description": "To token symbol or contract ID"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Amount to swap in human-readable units"
+        },
+        "slippage": {
+          "type": "number",
+          "default": 5,
+          "description": "Allowed slippage percentage (default 5)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Quote with expected output, rate, fee, price impact, and minimum received"
+    }
+  },
+  {
+    "name": "humble-swap.swap_txn",
+    "service": "humble-swap",
+    "tool": "swap_txn",
+    "description": "Build unsigned transactions to swap tokens on Humble Swap",
+    "chains": ["voi-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["fromToken", "toToken", "amount", "sender"],
+      "properties": {
+        "fromToken": {
+          "type": "string",
+          "description": "From token symbol or contract ID"
+        },
+        "toToken": {
+          "type": "string",
+          "description": "To token symbol or contract ID"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Amount to swap in human-readable units"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender wallet address"
+        },
+        "slippage": {
+          "type": "number",
+          "default": 5,
+          "description": "Allowed slippage percentage (default 5)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Base64-encoded transactions for signing via UluWalletMCP"
+    }
+  },
+  {
+    "name": "humble-swap.add_liquidity_txn",
+    "service": "humble-swap",
+    "tool": "add_liquidity_txn",
+    "description": "Build unsigned transactions to add liquidity to a Humble Swap pool",
+    "chains": ["voi-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["poolId", "amountA", "amountB", "sender"],
+      "properties": {
+        "poolId": {
+          "type": "number",
+          "description": "Pool application ID"
+        },
+        "amountA": {
+          "type": "string",
+          "description": "Amount of token A in human-readable units"
+        },
+        "amountB": {
+          "type": "string",
+          "description": "Amount of token B in human-readable units"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender wallet address"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Base64-encoded transactions for signing"
+    }
+  },
+  {
+    "name": "humble-swap.remove_liquidity_txn",
+    "service": "humble-swap",
+    "tool": "remove_liquidity_txn",
+    "description": "Build unsigned transactions to remove liquidity from a Humble Swap pool",
+    "chains": ["voi-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["poolId", "lpAmount", "sender"],
+      "properties": {
+        "poolId": {
+          "type": "number",
+          "description": "Pool application ID"
+        },
+        "lpAmount": {
+          "type": "string",
+          "description": "Amount of LP tokens to burn in human-readable units"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender wallet address"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Base64-encoded transactions for signing"
+    }
+  }
+]

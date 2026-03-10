@@ -57,6 +57,10 @@ services:
         condition: service_healthy
       aramid-bridge-mcp:
         condition: service_healthy
+      humble-swap-mcp:
+        condition: service_healthy
+      mimir-mcp:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
       interval: 10s
@@ -143,6 +147,24 @@ services:
     healthcheck:
       <<: *mcp-healthcheck
       test: ["CMD", "wget", "-qO-", "http://localhost:3008/health"]
+
+  humble-swap-mcp:
+    <<: *mcp-stub
+    environment:
+      PORT: 3009
+      SERVICE_NAME: humble-swap
+    healthcheck:
+      <<: *mcp-healthcheck
+      test: ["CMD", "wget", "-qO-", "http://localhost:3009/health"]
+
+  mimir-mcp:
+    <<: *mcp-stub
+    environment:
+      PORT: 3010
+      SERVICE_NAME: mimir
+    healthcheck:
+      <<: *mcp-healthcheck
+      test: ["CMD", "wget", "-qO-", "http://localhost:3010/health"]
 
   # --- Node Services (disabled by default for local dev) ---
   # Uncomment when running with real algod nodes:

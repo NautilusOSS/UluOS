@@ -120,6 +120,36 @@
       "tags": ["bridge", "cross-chain", "defi"],
       "visibility": "private",
       "description": "Aramid Bridge: cross-chain bridging of native tokens and ASAs between Voi and Algorand"
+    },
+    {
+      "name": "humble-swap",
+      "version": "0.1.0",
+      "transport": "stdio",
+      "command": "node",
+      "args": ["../HumbleSwapMCP/index.js"],
+      "baseUrl": "http://humble-swap-mcp:3009",
+      "layer": "protocol",
+      "healthPath": "/health",
+      "capabilitiesPath": "/capabilities",
+      "chains": ["voi-mainnet"],
+      "tags": ["dex", "swap", "liquidity", "defi"],
+      "visibility": "private",
+      "description": "Humble Swap DEX: pools, tokens, swaps, liquidity, price analytics, and arbitrage detection"
+    },
+    {
+      "name": "mimir",
+      "version": "0.1.0",
+      "transport": "stdio",
+      "command": "node",
+      "args": ["../MimirMCP/index.js"],
+      "baseUrl": "http://mimir-mcp:3010",
+      "layer": "protocol",
+      "healthPath": "/health",
+      "capabilitiesPath": "/capabilities",
+      "chains": ["voi-mainnet"],
+      "tags": ["indexer", "nft", "arc200", "arc72", "marketplace"],
+      "visibility": "private",
+      "description": "Mimir indexer: ARC200 tokens, ARC72 NFTs, marketplace listings/sales, and DEX pool data on Voi"
     }
   ]
 }

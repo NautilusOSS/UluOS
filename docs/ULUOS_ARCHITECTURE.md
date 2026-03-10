@@ -7,8 +7,8 @@
          (Control Plane)
 
                │
-          Protocol Layer
-  DorkFiMCP | EnvoiMCP | AramidMCP
+             Protocol Layer
+  DorkFiMCP | EnvoiMCP | AramidMCP | HumbleMCP | MimirMCP
 
                │
        Ecosystem Meaning Layer

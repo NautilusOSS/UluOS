@@ -10,7 +10,7 @@ UluOS is a composed runtime formed by the Ulu MCP ecosystem behind a unified gat
 
 - Infrastructure: UluCoreMCP, UluWalletMCP, UluBroadcastMCP
 - Meaning: UluVoiMCP, UluAlgorandMCP
-- Protocol: DorkFiMCP, EnvoiMCP
+- Protocol: DorkFiMCP, EnvoiMCP, AramidBridgeMCP, HumbleSwapMCP, MimirMCP
 - Control Plane: UluGateway
 
 ## Phases

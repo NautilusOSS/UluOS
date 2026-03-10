@@ -1,0 +1,575 @@
+[
+  {
+    "name": "mimir.arc200_tokens",
+    "service": "mimir",
+    "tool": "arc200_tokens",
+    "description": "Get ARC200 tokens on the Voi Network. Filter by contractId, symbol, or verified status",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contractId": {
+          "type": "number",
+          "description": "Filter by contract application ID"
+        },
+        "symbol": {
+          "type": "string",
+          "description": "Filter by token symbol"
+        },
+        "verified": {
+          "type": "number",
+          "description": "Filter for verified (1) or unverified (0) tokens"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum results to return (default 100)"
+        },
+        "next": {
+          "type": "string",
+          "description": "Pagination token from previous response"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "ARC200 tokens with metadata"
+    }
+  },
+  {
+    "name": "mimir.arc200_balances",
+    "service": "mimir",
+    "tool": "arc200_balances",
+    "description": "Get ARC200 token balances for accounts on the Voi Network",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "accountId": {
+          "type": "string",
+          "description": "Account address to get balances for"
+        },
+        "contractId": {
+          "type": "number",
+          "description": "Filter by contract application ID"
+        },
+        "symbol": {
+          "type": "string",
+          "description": "Filter by token symbol"
+        },
+        "verified": {
+          "type": "number",
+          "description": "Filter for verified (1) or unverified (0)"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum results to return (default 100)"
+        },
+        "next": {
+          "type": "string",
+          "description": "Pagination token"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Token balances for the account"
+    }
+  },
+  {
+    "name": "mimir.arc200_transfers",
+    "service": "mimir",
+    "tool": "arc200_transfers",
+    "description": "Get ARC200 token transfer history on the Voi Network",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contractId": {
+          "type": "number",
+          "description": "Filter by contract application ID"
+        },
+        "from": {
+          "type": "string",
+          "description": "Filter by sender address"
+        },
+        "to": {
+          "type": "string",
+          "description": "Filter by receiver address"
+        },
+        "user": {
+          "type": "string",
+          "description": "Filter where address is sender or receiver"
+        },
+        "round": {
+          "type": "number",
+          "description": "Filter by exact round number"
+        },
+        "min_round": {
+          "type": "number",
+          "description": "Minimum round (inclusive)"
+        },
+        "max_round": {
+          "type": "number",
+          "description": "Maximum round (inclusive)"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum results to return (default 100)"
+        },
+        "next": {
+          "type": "string",
+          "description": "Pagination token"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Transfer history"
+    }
+  },
+  {
+    "name": "mimir.arc200_approvals",
+    "service": "mimir",
+    "tool": "arc200_approvals",
+    "description": "Get ARC200 token approval information on the Voi Network",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contractId": {
+          "type": "number",
+          "description": "Filter by contract application ID"
+        },
+        "owner": {
+          "type": "string",
+          "description": "Filter by owner address"
+        },
+        "spender": {
+          "type": "string",
+          "description": "Filter by spender address"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum results to return (default 100)"
+        },
+        "next": {
+          "type": "string",
+          "description": "Pagination token"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Token approval data"
+    }
+  },
+  {
+    "name": "mimir.arc200_values",
+    "service": "mimir",
+    "tool": "arc200_values",
+    "description": "Get USD equivalent values for ARC200 tokens",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["tokenIds"],
+      "properties": {
+        "tokenIds": {
+          "type": "string",
+          "description": "Comma-separated contract IDs (e.g. '420069,390001')"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "ISO 8601 timestamp for historical values"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "USD values per token"
+    }
+  },
+  {
+    "name": "mimir.arc72_tokens",
+    "service": "mimir",
+    "tool": "arc72_tokens",
+    "description": "Get ARC72 NFT tokens on the Voi Network. Filter by collection, owner, token ID, etc.",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contractId": {
+          "type": "number",
+          "description": "Filter by collection contract ID"
+        },
+        "tokenId": {
+          "type": "string",
+          "description": "Filter by token ID"
+        },
+        "owner": {
+          "type": "string",
+          "description": "Filter by owner address"
+        },
+        "approved": {
+          "type": "string",
+          "description": "Filter by approved address"
+        },
+        "isBurned": {
+          "type": "boolean",
+          "description": "Filter by burned status"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum results to return (default 100)"
+        },
+        "next": {
+          "type": "string",
+          "description": "Pagination token"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "NFT tokens with metadata"
+    }
+  },
+  {
+    "name": "mimir.arc72_transfers",
+    "service": "mimir",
+    "tool": "arc72_transfers",
+    "description": "Get ARC72 NFT transfer history on the Voi Network",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contractId": {
+          "type": "number",
+          "description": "Filter by collection contract ID"
+        },
+        "tokenId": {
+          "type": "string",
+          "description": "Filter by token ID"
+        },
+        "from": {
+          "type": "string",
+          "description": "Filter by sender address"
+        },
+        "to": {
+          "type": "string",
+          "description": "Filter by receiver address"
+        },
+        "user": {
+          "type": "string",
+          "description": "Filter where address is sender or receiver"
+        },
+        "round": {
+          "type": "number",
+          "description": "Filter by exact round number"
+        },
+        "minRound": {
+          "type": "number",
+          "description": "Minimum round (inclusive)"
+        },
+        "maxRound": {
+          "type": "number",
+          "description": "Maximum round (inclusive)"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum results to return (default 100)"
+        },
+        "next": {
+          "type": "string",
+          "description": "Pagination token"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "NFT transfer history"
+    }
+  },
+  {
+    "name": "mimir.arc72_collections",
+    "service": "mimir",
+    "tool": "arc72_collections",
+    "description": "Get ARC72 NFT collections on the Voi Network. Filter by name, creator, verified status",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "contractId": {
+          "type": "string",
+          "description": "Contract ID or comma-separated list of IDs"
+        },
+        "name": {
+          "type": "string",
+          "description": "Filter by collection name"
+        },
+        "creator": {
+          "type": "string",
+          "description": "Filter by creator address"
+        },
+        "verified": {
+          "type": "number",
+          "description": "Filter for verified (1) or unverified (0)"
+        },
+        "includes": {
+          "type": "string",
+          "description": "Additional data to include (e.g. 'tokens')"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum results to return (default 100)"
+        },
+        "next": {
+          "type": "string",
+          "description": "Pagination token"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "NFT collections with metadata"
+    }
+  },
+  {
+    "name": "mimir.mp_listings",
+    "service": "mimir",
+    "tool": "mp_listings",
+    "description": "Get NFT marketplace listings on the Voi Network. Filter by collection, seller, price range",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "collectionId": {
+          "type": "string",
+          "description": "Filter by collection contract ID"
+        },
+        "tokenId": {
+          "type": "string",
+          "description": "Filter by token ID"
+        },
+        "seller": {
+          "type": "string",
+          "description": "Filter by seller address"
+        },
+        "active": {
+          "type": "boolean",
+          "description": "Filter for active listings"
+        },
+        "minPrice": {
+          "type": "number",
+          "description": "Minimum price filter"
+        },
+        "maxPrice": {
+          "type": "number",
+          "description": "Maximum price filter"
+        },
+        "currency": {
+          "type": "string",
+          "description": "Filter by currency (0 for native, or ASA ID)"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum results to return (default 100)"
+        },
+        "next": {
+          "type": "string",
+          "description": "Pagination token"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Marketplace listings"
+    }
+  },
+  {
+    "name": "mimir.mp_sales",
+    "service": "mimir",
+    "tool": "mp_sales",
+    "description": "Get NFT marketplace sales on the Voi Network. Filter by collection, buyer, seller, price range",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "collectionId": {
+          "type": "string",
+          "description": "Filter by collection contract ID"
+        },
+        "tokenId": {
+          "type": "string",
+          "description": "Filter by token ID"
+        },
+        "buyer": {
+          "type": "string",
+          "description": "Filter by buyer address"
+        },
+        "seller": {
+          "type": "string",
+          "description": "Filter by seller address"
+        },
+        "user": {
+          "type": "string",
+          "description": "Filter by user address (seller or buyer)"
+        },
+        "minPrice": {
+          "type": "number",
+          "description": "Minimum price filter"
+        },
+        "maxPrice": {
+          "type": "number",
+          "description": "Maximum price filter"
+        },
+        "sort": {
+          "type": "string",
+          "description": "Sort order: 'asc' or 'desc'"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum results to return (default 100)"
+        },
+        "next": {
+          "type": "string",
+          "description": "Pagination token"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Marketplace sales history"
+    }
+  },
+  {
+    "name": "mimir.mp_deletes",
+    "service": "mimir",
+    "tool": "mp_deletes",
+    "description": "Get deleted marketplace listings on the Voi Network",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "collectionId": {
+          "type": "string",
+          "description": "Filter by collection contract ID"
+        },
+        "tokenId": {
+          "type": "string",
+          "description": "Filter by token ID"
+        },
+        "owner": {
+          "type": "string",
+          "description": "Filter by owner address"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum results to return (default 100)"
+        },
+        "next": {
+          "type": "string",
+          "description": "Pagination token"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Deleted marketplace listings"
+    }
+  },
+  {
+    "name": "mimir.dex_pools",
+    "service": "mimir",
+    "tool": "dex_pools",
+    "description": "Get DEX liquidity pools on the Voi Network (Humble Swap & Nomadex) with live balances and volume",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "exchange": {
+          "type": "string",
+          "description": "Filter by exchange: 'humble' or 'nomadex'"
+        },
+        "tokenId": {
+          "type": "number",
+          "description": "Filter pools containing this ARC200 token contract ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "DEX liquidity pools with balances, volume, LP supply, and escrow addresses"
+    }
+  }
+]
