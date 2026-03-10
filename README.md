@@ -65,7 +65,7 @@ git clone git@github.com:NautilusOSS/UluOS.git && cd UluOS
 
 ### Start using
 
-Open the `UluOS` folder in Cursor — all 114 tools across 10 services are available immediately.
+Open the `UluOS` folder in Cursor — all 115 tools across 10 services are available immediately.
 
 ### HTTP gateway (Docker)
 
@@ -79,7 +79,7 @@ curl http://localhost:3000/capabilities
 
 ## MCP Integration
 
-The gateway is also an MCP server. Agents connect once and get access to all 114 tools across 10 services — no need to configure individual MCP connections.
+The gateway is also an MCP server. Agents connect once and get access to all 115 tools across 10 services — no need to configure individual MCP connections.
 
 **Cursor / local agents (stdio):**
 

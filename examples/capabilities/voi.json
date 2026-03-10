@@ -293,6 +293,61 @@
     }
   },
   {
+    "name": "voi.search_assets",
+    "service": "voi",
+    "tool": "search_assets",
+    "description": "Search known Voi assets by symbol, category, or protocol",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Filter by token symbol (e.g. VOI, USDC, SHELLY)"
+        },
+        "category": {
+          "type": "string",
+          "description": "Filter by category (e.g. native, bridged-token, community-token, stablecoin, liquid-staking)"
+        },
+        "protocol": {
+          "type": "string",
+          "description": "Filter by protocol ID (e.g. aramid-bridge, dorkfi)"
+        },
+        "verified": {
+          "type": "boolean",
+          "description": "Filter by verification status"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "assetId": { "type": "integer" },
+              "name": { "type": "string" },
+              "symbol": { "type": "string" },
+              "type": { "type": "string" },
+              "protocol": { "type": "string" },
+              "category": { "type": "string" },
+              "verified": { "type": "boolean" }
+            }
+          }
+        },
+        "totalCount": { "type": "integer" }
+      }
+    }
+  },
+  {
     "name": "voi.search_names",
     "service": "voi",
     "tool": "search_names",
@@ -310,6 +365,12 @@
         "pattern": {
           "type": "string",
           "description": "Search pattern (substring match against registered names)"
+        },
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200,
+          "description": "Maximum results to return (default 50, max 200)"
         }
       },
       "required": ["pattern"]
