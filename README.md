@@ -41,10 +41,12 @@ A local-first integration environment for the Ulu MCP ecosystem. UluOS composes 
 
 ## Quick Start
 
-One command to clone everything, install dependencies, and start the stack:
+One command to clone everything and install dependencies:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/NautilusOSS/UluOS/main/scripts/bootstrap.sh | bash
+cd UluOS
+./scripts/setup-mcp.sh   # register MCP servers in ~/.cursor/mcp.json
 ```
 
 Or step by step:
@@ -52,10 +54,10 @@ Or step by step:
 ```bash
 git clone git@github.com:NautilusOSS/UluOS.git && cd UluOS
 ./scripts/install-services.sh
-./scripts/dev-up.sh
+./scripts/setup-mcp.sh
 ```
 
-Then open the folder in Cursor — `.cursor/mcp.json` is pre-configured and all 61 tools are available immediately. Missing service repos are automatically stubbed.
+Then open the folder in Cursor — `setup-mcp.sh` registers all stdio MCP servers in `~/.cursor/mcp.json` so all 61 tools are available immediately. Missing service repos are automatically stubbed.
 
 ```bash
 curl http://localhost:3000/health
@@ -127,6 +129,7 @@ UluOS/
 
 ```bash
 ./scripts/install-services.sh # Clone missing MCP services + npm install
+./scripts/setup-mcp.sh        # Register MCP servers in ~/.cursor/mcp.json
 ./scripts/dev-up.sh           # Start stack
 ./scripts/dev-down.sh         # Stop stack (-v to remove volumes)
 ./scripts/dev-logs.sh [svc]   # Tail logs
