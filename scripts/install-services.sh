@@ -17,7 +17,7 @@ elif [[ "$GIT_ORIGIN" == https://github.com/* ]]; then
   URL_SUFFIX=".git"
 else
   echo "Could not detect GitHub org from UluOS remote: $GIT_ORIGIN"
-  echo "Set GITHUB_ORG env var to override (e.g. GITHUB_ORG=MaidToShelly)."
+  echo "Set GITHUB_ORG env var to override (e.g. GITHUB_ORG=NautilusOSS)."
   ORG="${GITHUB_ORG:-}"
   if [ -z "$ORG" ]; then exit 1; fi
   URL_PREFIX="git@github.com:${ORG}/"

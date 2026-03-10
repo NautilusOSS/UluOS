@@ -37,7 +37,7 @@ fi
 echo "Using Node.js $(node --version) (nvm)"
 
 # ── Clone / update UluOS ─────────────────────────────────────────────
-REPO_URL="${ULUOS_REPO:-git@github.com:MaidToShelly/UluOS.git}"
+REPO_URL="${ULUOS_REPO:-git@github.com:NautilusOSS/UluOS.git}"
 INSTALL_DIR="${ULUOS_DIR:-$(pwd)/UluOS}"
 
 if [ -d "$INSTALL_DIR" ]; then
@@ -53,9 +53,6 @@ echo "Installing gateway dependencies..."
 
 echo "Installing MCP services..."
 "$INSTALL_DIR/scripts/install-services.sh"
-
-echo "Registering UluOS MCP server globally..."
-"$INSTALL_DIR/scripts/setup-mcp.sh"
 
 echo ""
 echo "Starting the dev stack..."
