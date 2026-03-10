@@ -41,32 +41,42 @@ A local-first integration environment for the Ulu MCP ecosystem. UluOS composes 
 
 ## Quick Start
 
-One command to clone everything and install dependencies:
+**Prerequisites:** Node.js >= 20 ([nvm](https://github.com/nvm-sh/nvm) recommended), Git with SSH access to the NautilusOSS org.
+
+### One-liner
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/NautilusOSS/UluOS/main/scripts/bootstrap.sh | bash
-cd UluOS
-./scripts/setup-mcp.sh   # register MCP servers in ~/.cursor/mcp.json
 ```
 
-Or step by step:
+This clones UluOS and all service repos, installs dependencies, builds, and registers MCP servers in `~/.cursor/mcp.json`.
+
+### Step by step
 
 ```bash
 git clone git@github.com:NautilusOSS/UluOS.git && cd UluOS
 ./scripts/install-services.sh
-./scripts/setup-mcp.sh
 ```
 
-Then open the folder in Cursor — `setup-mcp.sh` registers all stdio MCP servers in `~/.cursor/mcp.json` so all 61 tools are available immediately. Missing service repos are automatically stubbed.
+`install-services.sh` clones sibling service repos, runs `npm install` + `npm run build` for each, and registers all stdio MCP servers in `~/.cursor/mcp.json`.
+
+### Start using
+
+Open the `UluOS` folder in Cursor — all 71 tools across 7 services are available immediately.
+
+### HTTP gateway (Docker)
+
+To run the gateway as an HTTP service (requires Docker):
 
 ```bash
+./scripts/dev-up.sh
 curl http://localhost:3000/health
 curl http://localhost:3000/capabilities
 ```
 
 ## MCP Integration
 
-The gateway is also an MCP server. Agents connect once and get access to all 61 tools across 7 services — no need to configure individual MCP connections.
+The gateway is also an MCP server. Agents connect once and get access to all 71 tools across 7 services — no need to configure individual MCP connections.
 
 **Cursor / local agents (stdio):**
 
