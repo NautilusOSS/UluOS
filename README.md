@@ -5,43 +5,74 @@ A local-first integration environment for the Ulu MCP ecosystem. UluOS composes 
 ## Architecture
 
 ```
-               ┌─────────────────┐
-               │   UluGateway    │  ← only public surface
-               │  (Control Plane)│
-               └────────┬────────┘
-                        │
-  ┌─────────────────────┼──────────────────────────────────┐
-  │                       Protocol Layer                              │
-  │ DorkFiMCP │ EnvoiMCP │ AramidMCP │ HumbleMCP │ NomadexMCP │ MimirMCP│
-  └──────────────────────────┬───────────────────────────────────────────┘
-                        │
-       ┌────────────────┼────────────────┐
-       │     Ecosystem Meaning Layer     │
-       │   UluVoiMCP  │  UluAlgorandMCP  │
-       └────────────────┼────────────────┘
-                        │
-     ┌──────────────────┼──────────────────┐
-     │       Infrastructure Layer          │
-     │ UluCoreMCP │ WalletMCP │ BroadcastMCP│
-     └─────────────────────────────────────┘
+                  ┌─────────────────┐
+                  │   UluGateway    │  ← only public surface
+                  │  (Control Plane)│
+                  └────────┬────────┘
+                           │
+  ┌────────────────────────┼────────────────────────┐
+  │              Protocol Layer                      │
+  │                                                  │
+  │  Voi                        Algorand             │
+  │  ├─ HumbleSwapMCP           (coming soon)        │
+  │  ├─ NomadexMCP                                   │
+  │  ├─ EnvoiMCP                                     │
+  │  └─ MimirMCP                                     │
+  │                                                  │
+  │  Cross-chain (Voi ↔ Algorand)                    │
+  │  ├─ AramidBridgeMCP                              │
+  │  └─ DorkFiMCP                                    │
+  └────────────────────────┼────────────────────────┘
+                           │
+            ┌──────────────┼──────────────┐
+            │   Ecosystem Meaning Layer   │
+            │  UluVoiMCP │ UluAlgorandMCP │
+            └──────────────┼──────────────┘
+                           │
+            ┌──────────────┼──────────────┐
+            │    Infrastructure Layer     │
+            │ CoreMCP │ WalletMCP │ BcastMCP│
+            └─────────────────────────────┘
 ```
 
 ## Services
 
-| Service | Layer | Purpose |
+### Control Plane
+
+| Service | Purpose |
+|---------|---------|
+| **UluGateway** | Routing, capability discovery, workflow orchestration |
+
+### Infrastructure (all chains)
+
+| Service | Purpose |
+|---------|---------|
+| **UluCoreMCP** | Raw blockchain data (accounts, assets, transactions, TEAL) |
+| **UluWalletMCP** | Key management and transaction signing (never public) |
+| **UluBroadcastMCP** | Transaction submission and confirmation |
+
+### Ecosystem Meaning
+
+| Service | Chain | Purpose |
 |---------|-------|---------|
-| **UluGateway** | Control Plane | Routing, capability discovery, workflow orchestration |
-| **UluCoreMCP** | Infrastructure | Raw blockchain data (accounts, assets, transactions, TEAL) |
-| **UluWalletMCP** | Infrastructure | Key management and transaction signing (never public) |
-| **UluBroadcastMCP** | Infrastructure | Transaction submission and confirmation |
-| **UluVoiMCP** | Ecosystem | Voi protocol discovery, enVoi naming, contract identification, Nomadex DEX |
-| **UluAlgorandMCP** | Ecosystem | Algorand protocol discovery, NFDomains, contract identification |
-| **DorkFiMCP** | Protocol | DorkFi lending: markets, positions, deposits, liquidations |
-| **EnvoiMCP** | Protocol | enVoi name service: resolution, profiles, registration lookup |
-| **AramidBridgeMCP** | Protocol | Aramid Bridge: cross-chain bridging between Voi and Algorand |
-| **HumbleSwapMCP** | Protocol | Humble Swap DEX: pools, swaps, liquidity, price analytics, arbitrage |
-| **NomadexMCP** | Protocol | Nomadex DEX: pool discovery, swap quotes and transactions, add/remove liquidity on Voi |
-| **MimirMCP** | Protocol | Mimir indexer: ARC200 tokens, ARC72 NFTs, marketplace data on Voi |
+| **UluVoiMCP** | Voi | Protocol discovery, enVoi naming, contract identification |
+| **UluAlgorandMCP** | Algorand | Protocol discovery, NFDomains, contract identification |
+
+### Protocol — Voi
+
+| Service | Purpose |
+|---------|---------|
+| **HumbleSwapMCP** | Humble Swap DEX: pools, swaps, liquidity, price analytics, arbitrage |
+| **NomadexMCP** | Nomadex DEX: pool discovery, swap quotes and transactions, add/remove liquidity |
+| **EnvoiMCP** | enVoi name service: resolution, profiles, registration |
+| **MimirMCP** | Mimir indexer: ARC200 tokens, ARC72 NFTs, marketplace data |
+
+### Protocol — Cross-chain
+
+| Service | Chain | Purpose |
+|---------|-------|---------|
+| **AramidBridgeMCP** | Voi ↔ Algorand | Cross-chain token bridging |
+| **DorkFiMCP** | Voi ↔ Algorand | DorkFi lending: markets, positions, deposits, liquidations |
 
 ## Quick Start
 

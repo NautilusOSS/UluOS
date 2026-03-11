@@ -7,8 +7,10 @@
                (Control Plane)
 
                       │
-                Protocol Layer
-  DorkFiMCP | EnvoiMCP | AramidMCP | HumbleMCP | NomadexMCP | MimirMCP
+              Protocol Layer
+   Voi:         HumbleMCP | NomadexMCP | EnvoiMCP | MimirMCP
+   Cross-chain: AramidMCP | DorkFiMCP
+   Algorand:    (coming soon)
 
                       │
             Ecosystem Meaning Layer
