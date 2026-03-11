@@ -38,7 +38,7 @@ The control plane for UluOS. Routes requests to MCP services, normalizes respons
 
 ## MCP Server
 
-The gateway is itself an MCP server. Instead of connecting to 7 individual MCP services, agents connect to the gateway once and get access to all 61 tools (57 direct + 4 orchestrated actions).
+The gateway is itself an MCP server. Instead of connecting to 7 individual MCP services, agents connect to the gateway once and get access to all 68 tools (64 direct + 4 orchestrated actions).
 
 ### SSE Transport (remote)
 
@@ -86,7 +86,7 @@ Or with Docker running:
 |----------|-------|---------|
 | Core | 15 | `core.get_account`, `core.search_transactions`, `core.compile_teal` |
 | Broadcast | 6 | `broadcast.broadcast_transactions`, `broadcast.wait_for_confirmation` |
-| Voi | 10 | `voi.resolve_name`, `voi.identify_application` |
+| Voi | 18 | `voi.resolve_name`, `voi.identify_application`, `voi.get_pools`, `voi.swap_txn` |
 | Algorand | 10 | `algorand.resolve_name`, `algorand.get_protocol_summary` |
 | Envoi | 6 | `envoi.resolve_name`, `envoi.get_profile`, `envoi.search_names` |
 | DorkFi | 10 | `dorkfi.get_markets`, `dorkfi.deposit_txn` |

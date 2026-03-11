@@ -57,9 +57,9 @@
       "healthPath": "/health",
       "capabilitiesPath": "/capabilities",
       "chains": ["voi-mainnet"],
-      "tags": ["ecosystem", "naming", "protocol-discovery"],
+      "tags": ["ecosystem", "naming", "protocol-discovery", "dex", "swap", "liquidity"],
       "visibility": "private",
-      "description": "Voi ecosystem meaning: protocol identification, enVoi name resolution, contract roles"
+      "description": "Voi ecosystem meaning: protocol identification, enVoi name resolution, contract roles, Nomadex DEX swaps and liquidity"
     },
     {
       "name": "algorand",

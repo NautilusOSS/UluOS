@@ -34,7 +34,7 @@ A local-first integration environment for the Ulu MCP ecosystem. UluOS composes 
 | **UluCoreMCP** | Infrastructure | Raw blockchain data (accounts, assets, transactions, TEAL) |
 | **UluWalletMCP** | Infrastructure | Key management and transaction signing (never public) |
 | **UluBroadcastMCP** | Infrastructure | Transaction submission and confirmation |
-| **UluVoiMCP** | Ecosystem | Voi protocol discovery, enVoi naming, contract identification |
+| **UluVoiMCP** | Ecosystem | Voi protocol discovery, enVoi naming, contract identification, Nomadex DEX |
 | **UluAlgorandMCP** | Ecosystem | Algorand protocol discovery, NFDomains, contract identification |
 | **DorkFiMCP** | Protocol | DorkFi lending: markets, positions, deposits, liquidations |
 | **EnvoiMCP** | Protocol | enVoi name service: resolution, profiles, registration lookup |
@@ -65,7 +65,7 @@ git clone git@github.com:NautilusOSS/UluOS.git && cd UluOS
 
 ### Start using
 
-Open the `UluOS` folder in Cursor — all 115 tools across 10 services are available immediately.
+Open the `UluOS` folder in Cursor — all 122 tools across 10 services are available immediately.
 
 ### HTTP gateway (Docker)
 
@@ -79,7 +79,7 @@ curl http://localhost:3000/capabilities
 
 ## MCP Integration
 
-The gateway is also an MCP server. Agents connect once and get access to all 115 tools across 10 services — no need to configure individual MCP connections.
+The gateway is also an MCP server. Agents connect once and get access to all 122 tools across 10 services — no need to configure individual MCP connections.
 
 **Cursor / local agents (stdio):**
 

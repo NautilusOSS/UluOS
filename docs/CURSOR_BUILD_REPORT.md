@@ -37,7 +37,7 @@ Created `examples/capabilities/` with 60 total capabilities across 6 services:
 | `core.json` | UluCoreMCP | 15 (network status, accounts, assets, apps, txns, TEAL, simulation) |
 | `wallet.json` | UluWalletMCP | 9 (signer CRUD, signing) |
 | `broadcast.json` | UluBroadcastMCP | 6 (submit, status, confirm, simulate) |
-| `voi.json` | UluVoiMCP | 10 (protocols, naming, identification) |
+| `voi.json` | UluVoiMCP | 18 (protocols, naming, identification, Nomadex DEX) |
 | `algorand.json` | UluAlgorandMCP | 10 (protocols, naming, identification) |
 | `dorkfi.json` | DorkFiMCP | 10 (markets, positions, health, txn builders) |
 
