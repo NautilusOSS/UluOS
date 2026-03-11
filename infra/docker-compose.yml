@@ -59,6 +59,8 @@ services:
         condition: service_healthy
       humble-swap-mcp:
         condition: service_healthy
+      nomadex-mcp:
+        condition: service_healthy
       mimir-mcp:
         condition: service_healthy
     healthcheck:
@@ -156,6 +158,15 @@ services:
     healthcheck:
       <<: *mcp-healthcheck
       test: ["CMD", "wget", "-qO-", "http://localhost:3009/health"]
+
+  nomadex-mcp:
+    <<: *mcp-stub
+    environment:
+      PORT: 3011
+      SERVICE_NAME: nomadex
+    healthcheck:
+      <<: *mcp-healthcheck
+      test: ["CMD", "wget", "-qO-", "http://localhost:3011/health"]
 
   mimir-mcp:
     <<: *mcp-stub

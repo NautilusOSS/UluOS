@@ -11,9 +11,9 @@ A local-first integration environment for the Ulu MCP ecosystem. UluOS composes 
                └────────┬────────┘
                         │
   ┌─────────────────────┼──────────────────────────────────┐
-  │                  Protocol Layer                        │
-  │ DorkFiMCP │ EnvoiMCP │ AramidMCP │ HumbleMCP │ MimirMCP│
-  └─────────────────────┬──────────────────────────────────┘
+  │                       Protocol Layer                              │
+  │ DorkFiMCP │ EnvoiMCP │ AramidMCP │ HumbleMCP │ NomadexMCP │ MimirMCP│
+  └──────────────────────────┬───────────────────────────────────────────┘
                         │
        ┌────────────────┼────────────────┐
        │     Ecosystem Meaning Layer     │
@@ -40,6 +40,7 @@ A local-first integration environment for the Ulu MCP ecosystem. UluOS composes 
 | **EnvoiMCP** | Protocol | enVoi name service: resolution, profiles, registration lookup |
 | **AramidBridgeMCP** | Protocol | Aramid Bridge: cross-chain bridging between Voi and Algorand |
 | **HumbleSwapMCP** | Protocol | Humble Swap DEX: pools, swaps, liquidity, price analytics, arbitrage |
+| **NomadexMCP** | Protocol | Nomadex DEX: pool discovery, swap quotes and transactions, add/remove liquidity on Voi |
 | **MimirMCP** | Protocol | Mimir indexer: ARC200 tokens, ARC72 NFTs, marketplace data on Voi |
 
 ## Quick Start
@@ -65,7 +66,7 @@ git clone git@github.com:NautilusOSS/UluOS.git && cd UluOS
 
 ### Start using
 
-Open the `UluOS` folder in Cursor — all 122 tools across 10 services are available immediately.
+Open the `UluOS` folder in Cursor — all 122 tools across 11 services are available immediately.
 
 ### HTTP gateway (Docker)
 
@@ -79,7 +80,7 @@ curl http://localhost:3000/capabilities
 
 ## MCP Integration
 
-The gateway is also an MCP server. Agents connect once and get access to all 122 tools across 10 services — no need to configure individual MCP connections.
+The gateway is also an MCP server. Agents connect once and get access to all 122 tools across 11 services — no need to configure individual MCP connections.
 
 **Cursor / local agents (stdio):**
 

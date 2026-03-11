@@ -137,6 +137,21 @@
       "description": "Humble Swap DEX: pools, tokens, swaps, liquidity, price analytics, and arbitrage detection"
     },
     {
+      "name": "nomadex",
+      "version": "0.2.0",
+      "transport": "stdio",
+      "command": "node",
+      "args": ["../NomadexMCP/index.js"],
+      "baseUrl": "http://nomadex-mcp:3011",
+      "layer": "protocol",
+      "healthPath": "/health",
+      "capabilitiesPath": "/capabilities",
+      "chains": ["voi-mainnet"],
+      "tags": ["dex", "swap", "liquidity", "defi"],
+      "visibility": "private",
+      "description": "Nomadex DEX: pool discovery, swap quotes and transactions via swap-api, add/remove liquidity on Voi"
+    },
+    {
       "name": "mimir",
       "version": "0.1.0",
       "transport": "stdio",
