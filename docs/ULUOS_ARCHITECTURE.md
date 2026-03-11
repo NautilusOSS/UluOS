@@ -3,20 +3,20 @@
 ## Layer Model
 
 ```text
-            UluGateway
-         (Control Plane)
+                  UluGateway
+               (Control Plane)
 
-               │
-             Protocol Layer
-  DorkFiMCP | EnvoiMCP | AramidMCP | HumbleMCP | MimirMCP
+                      │
+                Protocol Layer
+  DorkFiMCP | EnvoiMCP | AramidMCP | HumbleMCP | NomadexMCP | MimirMCP
 
-               │
-       Ecosystem Meaning Layer
-     UluVoiMCP | UluAlgorandMCP
+                      │
+            Ecosystem Meaning Layer
+          UluVoiMCP | UluAlgorandMCP
 
-               │
-         Infrastructure Layer
-   CoreMCP | WalletMCP | BroadcastMCP
+                      │
+              Infrastructure Layer
+        CoreMCP | WalletMCP | BroadcastMCP
 ```
 
 ## Principle

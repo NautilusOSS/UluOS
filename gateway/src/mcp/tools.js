@@ -1,4 +1,4 @@
-const { dorkfiAction } = require("../services/orchestrator");
+const { dorkfiAction, humbleSwapAction } = require("../services/orchestrator");
 const logger = require("../utils/logger");
 
 const ORCHESTRATED_ACTIONS = [
@@ -68,6 +68,57 @@ const ORCHESTRATED_ACTIONS = [
   },
 ];
 
+const HUMBLE_SWAP_ACTIONS = [
+  {
+    name: "actions.humble-swap.swap",
+    description: "Orchestrated Humble Swap token swap: builds unsigned transactions, signs via WalletMCP, broadcasts via BroadcastMCP, and waits for confirmation. Returns confirmed transaction IDs.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        fromToken: { type: "string", description: "From token symbol or contract ID (e.g. 'VOI', 'aUSDC')" },
+        toToken: { type: "string", description: "To token symbol or contract ID" },
+        amount: { type: "string", description: "Amount to swap in human-readable units" },
+        sender: { type: "string", description: "Sender wallet address" },
+        signerId: { type: "string", description: "Wallet signer ID to use for signing" },
+        slippage: { type: "number", description: "Allowed slippage percentage (default 5)" },
+      },
+      required: ["fromToken", "toToken", "amount", "sender", "signerId"],
+    },
+    _action: "swap",
+  },
+  {
+    name: "actions.humble-swap.add_liquidity",
+    description: "Orchestrated Humble Swap add liquidity: builds, signs, broadcasts, and confirms.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        poolId: { type: "number", description: "Pool application ID" },
+        amountA: { type: "string", description: "Amount of token A in human-readable units" },
+        amountB: { type: "string", description: "Amount of token B in human-readable units" },
+        sender: { type: "string", description: "Sender wallet address" },
+        signerId: { type: "string", description: "Wallet signer ID" },
+      },
+      required: ["poolId", "amountA", "amountB", "sender", "signerId"],
+    },
+    _action: "add_liquidity",
+  },
+  {
+    name: "actions.humble-swap.remove_liquidity",
+    description: "Orchestrated Humble Swap remove liquidity: builds, signs, broadcasts, and confirms.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        poolId: { type: "number", description: "Pool application ID" },
+        lpAmount: { type: "string", description: "Amount of LP tokens to burn in human-readable units" },
+        sender: { type: "string", description: "Sender wallet address" },
+        signerId: { type: "string", description: "Wallet signer ID" },
+      },
+      required: ["poolId", "lpAmount", "sender", "signerId"],
+    },
+    _action: "remove_liquidity",
+  },
+];
+
 class ToolRegistry {
   constructor(capabilities, serviceRegistry) {
     this._serviceRegistry = serviceRegistry;
@@ -80,6 +131,10 @@ class ToolRegistry {
     }
 
     for (const action of ORCHESTRATED_ACTIONS) {
+      this._actionTools.set(action.name, action);
+    }
+
+    for (const action of HUMBLE_SWAP_ACTIONS) {
       this._actionTools.set(action.name, action);
     }
   }
@@ -155,12 +210,14 @@ class ToolRegistry {
     const action = this._actionTools.get(name);
     logger.info({ msg: "mcp orchestrated action", action: name });
 
-    const result = await dorkfiAction(
-      this._serviceRegistry,
-      action._action,
-      args,
-      `mcp_${Date.now()}`,
-    );
+    const requestId = `mcp_${Date.now()}`;
+    let result;
+
+    if (name.startsWith("actions.humble-swap.")) {
+      result = await humbleSwapAction(this._serviceRegistry, action._action, args, requestId);
+    } else {
+      result = await dorkfiAction(this._serviceRegistry, action._action, args, requestId);
+    }
 
     return {
       content: [{ type: "text", text: JSON.stringify(result, null, 2) }],

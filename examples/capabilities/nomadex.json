@@ -1,0 +1,239 @@
+[
+  {
+    "name": "nomadex.get_pools",
+    "service": "nomadex",
+    "tool": "get_pools",
+    "description": "List Nomadex DEX pools on Voi with balances, TVL, volume, and APR",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Filter pools containing this token symbol (e.g. VOI, UNIT, SHELLY)"
+        }
+      }
+    },
+    "response": {
+      "type": "array",
+      "description": "Pool list with balances, TVL, volume, and APR"
+    }
+  },
+  {
+    "name": "nomadex.get_pool",
+    "service": "nomadex",
+    "tool": "get_pool",
+    "description": "Get detailed information for a specific Nomadex pool by application ID",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["poolAppId"],
+      "properties": {
+        "poolAppId": {
+          "type": "number",
+          "description": "Pool application ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Detailed pool information"
+    }
+  },
+  {
+    "name": "nomadex.get_tokens",
+    "service": "nomadex",
+    "tool": "get_tokens",
+    "description": "List tokens available on Nomadex with their contract IDs, decimals, and pool count",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Filter by token symbol"
+        }
+      }
+    },
+    "response": {
+      "type": "array",
+      "description": "Token list with contract IDs, decimals, and pool count"
+    }
+  },
+  {
+    "name": "nomadex.get_quote",
+    "service": "nomadex",
+    "tool": "get_quote",
+    "description": "Get a swap quote with expected output, rate, and price impact",
+    "chains": ["voi-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["fromToken", "toToken", "amount"],
+      "properties": {
+        "fromToken": {
+          "type": "string",
+          "description": "Source token symbol (e.g. VOI, aUSDC, UNIT)"
+        },
+        "toToken": {
+          "type": "string",
+          "description": "Destination token symbol"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Amount to swap in human-readable units"
+        },
+        "slippage": {
+          "type": "number",
+          "default": 5,
+          "description": "Allowed slippage percentage (default 5)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Quote with expected output, rate, and price impact"
+    }
+  },
+  {
+    "name": "nomadex.swap_txn",
+    "service": "nomadex",
+    "tool": "swap_txn",
+    "description": "Build unsigned swap transactions for a Nomadex pool",
+    "chains": ["voi-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["fromToken", "toToken", "amount", "sender"],
+      "properties": {
+        "fromToken": {
+          "type": "string",
+          "description": "Source token symbol"
+        },
+        "toToken": {
+          "type": "string",
+          "description": "Destination token symbol"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Amount to swap in human-readable units"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender wallet address"
+        },
+        "slippage": {
+          "type": "number",
+          "default": 5,
+          "description": "Allowed slippage percentage (default 5)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Base64-encoded transactions for signing via UluWalletMCP"
+    }
+  },
+  {
+    "name": "nomadex.add_liquidity_txn",
+    "service": "nomadex",
+    "tool": "add_liquidity_txn",
+    "description": "Build unsigned transactions to add liquidity to a Nomadex pool",
+    "chains": ["voi-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["poolAppId", "amountA", "amountB", "sender"],
+      "properties": {
+        "poolAppId": {
+          "type": "number",
+          "description": "Pool application ID"
+        },
+        "amountA": {
+          "type": "string",
+          "description": "Amount of token A in human-readable units"
+        },
+        "amountB": {
+          "type": "string",
+          "description": "Amount of token B in human-readable units"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender wallet address"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Base64-encoded transactions for signing"
+    }
+  },
+  {
+    "name": "nomadex.remove_liquidity_txn",
+    "service": "nomadex",
+    "tool": "remove_liquidity_txn",
+    "description": "Build unsigned transactions to remove liquidity from a Nomadex pool",
+    "chains": ["voi-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["poolAppId", "lpAmount", "sender"],
+      "properties": {
+        "poolAppId": {
+          "type": "number",
+          "description": "Pool application ID"
+        },
+        "lpAmount": {
+          "type": "string",
+          "description": "Amount of LP tokens to burn in human-readable units"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender wallet address"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Base64-encoded transactions for signing"
+    }
+  }
+]
