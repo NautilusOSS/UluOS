@@ -63,6 +63,8 @@ services:
         condition: service_healthy
       mimir-mcp:
         condition: service_healthy
+      pactfi-mcp:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
       interval: 10s
@@ -176,6 +178,15 @@ services:
     healthcheck:
       <<: *mcp-healthcheck
       test: ["CMD", "wget", "-qO-", "http://localhost:3010/health"]
+
+  pactfi-mcp:
+    <<: *mcp-stub
+    environment:
+      PORT: 3012
+      SERVICE_NAME: pactfi
+    healthcheck:
+      <<: *mcp-healthcheck
+      test: ["CMD", "wget", "-qO-", "http://localhost:3012/health"]
 
   # --- Node Services (disabled by default for local dev) ---
   # Uncomment when running with real algod nodes:

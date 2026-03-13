@@ -10,7 +10,7 @@
               Protocol Layer
    Voi:         HumbleMCP | NomadexMCP | EnvoiMCP | MimirMCP
    Cross-chain: AramidMCP | DorkFiMCP
-   Algorand:    (coming soon)
+   Algorand:    PactFiMCP
 
                       │
             Ecosystem Meaning Layer

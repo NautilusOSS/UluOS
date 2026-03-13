@@ -165,6 +165,21 @@
       "tags": ["indexer", "nft", "arc200", "arc72", "marketplace"],
       "visibility": "private",
       "description": "Mimir indexer: ARC200 tokens, ARC72 NFTs, marketplace listings/sales, and DEX pool data on Voi"
+    },
+    {
+      "name": "pactfi",
+      "version": "0.1.0",
+      "transport": "stdio",
+      "command": "node",
+      "args": ["../PactFiMCP/index.js"],
+      "baseUrl": "http://pactfi-mcp:3012",
+      "layer": "protocol",
+      "healthPath": "/health",
+      "capabilitiesPath": "/capabilities",
+      "chains": ["algorand-mainnet"],
+      "tags": ["dex", "swap", "liquidity", "defi"],
+      "visibility": "private",
+      "description": "PactFi AMM DEX: pool discovery, swap quotes and transactions, add/remove liquidity on Algorand"
     }
   ]
 }

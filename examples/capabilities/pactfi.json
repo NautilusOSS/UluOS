@@ -1,0 +1,244 @@
+[
+  {
+    "name": "pactfi.get_pools",
+    "service": "pactfi",
+    "tool": "get_pools",
+    "description": "List PactFi AMM liquidity pools on Algorand with optional filters. Returns pool metadata, TVL, volume, and APR.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Filter pools containing this token symbol (e.g. ALGO, USDC, goBTC)"
+        },
+        "is_verified": {
+          "type": "boolean",
+          "description": "Filter for verified pools only"
+        },
+        "pool_type": {
+          "type": "string",
+          "enum": ["CONST", "STABLE"],
+          "description": "Filter by pool type: CONST (constant product) or STABLE (stableswap)"
+        },
+        "limit": {
+          "type": "number",
+          "description": "Maximum number of results to return (default 20)"
+        }
+      }
+    },
+    "response": {
+      "type": "array",
+      "description": "Pool list with metadata, TVL, volume, and APR"
+    }
+  },
+  {
+    "name": "pactfi.get_pool",
+    "service": "pactfi",
+    "tool": "get_pool",
+    "description": "Get detailed PactFi pool information by application ID. Returns on-chain reserves, fee configuration, LP supply, and API metadata.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["appId"],
+      "properties": {
+        "appId": {
+          "type": "number",
+          "description": "Pool application ID on Algorand"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "On-chain reserves, fee configuration, LP supply, and API metadata"
+    }
+  },
+  {
+    "name": "pactfi.get_quote",
+    "service": "pactfi",
+    "tool": "get_quote",
+    "description": "Get a swap quote from PactFi using constant-product AMM math. Computes expected output, fee, price impact, and minimum received after slippage.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["fromToken", "toToken", "amount"],
+      "properties": {
+        "fromToken": {
+          "type": "string",
+          "description": "Token symbol to swap from (e.g. ALGO, USDC)"
+        },
+        "toToken": {
+          "type": "string",
+          "description": "Token symbol to swap to (e.g. USDC, ALGO)"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Amount to swap in human-readable units (e.g. '100' for 100 ALGO)"
+        },
+        "poolAppId": {
+          "type": "number",
+          "description": "Pool application ID (optional if fromToken and toToken are provided)"
+        },
+        "slippage": {
+          "type": "number",
+          "default": 0.5,
+          "description": "Slippage tolerance in percent (default 0.5)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Quote with expected output, fee, price impact, and minimum received"
+    }
+  },
+  {
+    "name": "pactfi.swap_txn",
+    "service": "pactfi",
+    "tool": "swap_txn",
+    "description": "Build unsigned transactions to swap tokens on PactFi. Returns base64-encoded transaction group for signing via UluWalletMCP.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["fromToken", "toToken", "amount", "sender"],
+      "properties": {
+        "fromToken": {
+          "type": "string",
+          "description": "Token symbol to swap from (e.g. ALGO, USDC)"
+        },
+        "toToken": {
+          "type": "string",
+          "description": "Token symbol to swap to"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Amount to swap in human-readable units"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender wallet address"
+        },
+        "poolAppId": {
+          "type": "number",
+          "description": "Pool application ID (optional — auto-discovered from token symbols)"
+        },
+        "slippage": {
+          "type": "number",
+          "default": 0.5,
+          "description": "Slippage tolerance in percent (default 0.5)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Base64-encoded transactions for signing via UluWalletMCP"
+    }
+  },
+  {
+    "name": "pactfi.add_liquidity_txn",
+    "service": "pactfi",
+    "tool": "add_liquidity_txn",
+    "description": "Build unsigned transactions to add liquidity to a PactFi pool. Returns base64-encoded transaction group for signing via UluWalletMCP.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["poolAppId", "primaryAmount", "secondaryAmount", "sender"],
+      "properties": {
+        "poolAppId": {
+          "type": "number",
+          "description": "Pool application ID"
+        },
+        "primaryAmount": {
+          "type": "string",
+          "description": "Amount of primary asset in human-readable units"
+        },
+        "secondaryAmount": {
+          "type": "string",
+          "description": "Amount of secondary asset in human-readable units"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender wallet address"
+        },
+        "slippage": {
+          "type": "number",
+          "default": 0.5,
+          "description": "Slippage tolerance in percent (default 0.5)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Base64-encoded transactions for signing via UluWalletMCP"
+    }
+  },
+  {
+    "name": "pactfi.remove_liquidity_txn",
+    "service": "pactfi",
+    "tool": "remove_liquidity_txn",
+    "description": "Build unsigned transactions to remove liquidity from a PactFi pool. Returns base64-encoded transaction group for signing via UluWalletMCP.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["poolAppId", "lpAmount", "sender"],
+      "properties": {
+        "poolAppId": {
+          "type": "number",
+          "description": "Pool application ID"
+        },
+        "lpAmount": {
+          "type": "string",
+          "description": "Amount of LP tokens to burn in human-readable units"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender wallet address"
+        },
+        "slippage": {
+          "type": "number",
+          "default": 0.5,
+          "description": "Slippage tolerance in percent (default 0.5)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Base64-encoded transactions for signing via UluWalletMCP"
+    }
+  }
+]
