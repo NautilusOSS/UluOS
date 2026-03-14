@@ -65,6 +65,8 @@ services:
         condition: service_healthy
       pactfi-mcp:
         condition: service_healthy
+      humble-legacy-mcp:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
       interval: 10s
@@ -187,6 +189,15 @@ services:
     healthcheck:
       <<: *mcp-healthcheck
       test: ["CMD", "wget", "-qO-", "http://localhost:3012/health"]
+
+  humble-legacy-mcp:
+    <<: *mcp-stub
+    environment:
+      PORT: 3013
+      SERVICE_NAME: humble-legacy
+    healthcheck:
+      <<: *mcp-healthcheck
+      test: ["CMD", "wget", "-qO-", "http://localhost:3013/health"]
 
   # --- Node Services (disabled by default for local dev) ---
   # Uncomment when running with real algod nodes:

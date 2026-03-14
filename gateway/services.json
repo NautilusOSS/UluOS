@@ -180,6 +180,21 @@
       "tags": ["dex", "swap", "liquidity", "defi"],
       "visibility": "private",
       "description": "PactFi AMM DEX: pool discovery, swap quotes and transactions, add/remove liquidity on Algorand"
+    },
+    {
+      "name": "humble-legacy",
+      "version": "0.1.0",
+      "transport": "stdio",
+      "command": "node",
+      "args": ["../HumbleLegacyMCP/index.js"],
+      "baseUrl": "http://humble-legacy-mcp:3013",
+      "layer": "protocol",
+      "healthPath": "/health",
+      "capabilitiesPath": "/capabilities",
+      "chains": ["algorand-mainnet"],
+      "tags": ["dex", "swap", "liquidity", "defi"],
+      "visibility": "private",
+      "description": "Legacy Humble Swap DEX: ASA-based duoswap pools, swap quotes and transactions, add/remove liquidity on Algorand"
     }
   ]
 }
