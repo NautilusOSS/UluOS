@@ -67,6 +67,8 @@ services:
         condition: service_healthy
       humble-legacy-mcp:
         condition: service_healthy
+      tinyman-mcp:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
       interval: 10s
@@ -198,6 +200,15 @@ services:
     healthcheck:
       <<: *mcp-healthcheck
       test: ["CMD", "wget", "-qO-", "http://localhost:3013/health"]
+
+  tinyman-mcp:
+    <<: *mcp-stub
+    environment:
+      PORT: 3014
+      SERVICE_NAME: tinyman
+    healthcheck:
+      <<: *mcp-healthcheck
+      test: ["CMD", "wget", "-qO-", "http://localhost:3014/health"]
 
   # --- Node Services (disabled by default for local dev) ---
   # Uncomment when running with real algod nodes:

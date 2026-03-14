@@ -195,6 +195,21 @@
       "tags": ["dex", "swap", "liquidity", "defi"],
       "visibility": "private",
       "description": "Legacy Humble Swap DEX: ASA-based duoswap pools, swap quotes and transactions, add/remove liquidity on Algorand"
+    },
+    {
+      "name": "tinyman",
+      "version": "0.1.0",
+      "transport": "stdio",
+      "command": "node",
+      "args": ["../TinymanMCP/index.js"],
+      "baseUrl": "http://tinyman-mcp:3014",
+      "layer": "protocol",
+      "healthPath": "/health",
+      "capabilitiesPath": "/capabilities",
+      "chains": ["algorand-mainnet"],
+      "tags": ["dex", "swap", "liquidity", "defi", "amm"],
+      "visibility": "private",
+      "description": "Tinyman v2 AMM DEX: pool discovery, swap quotes and transactions, add/remove liquidity, asset analytics on Algorand"
     }
   ]
 }

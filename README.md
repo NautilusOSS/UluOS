@@ -14,9 +14,9 @@ A local-first integration environment for the Ulu MCP ecosystem. UluOS composes 
   │              Protocol Layer                      │
   │                                                  │
   │  Voi                        Algorand             │
-  │  ├─ HumbleSwapMCP           ├─ PactFiMCP         │
-  │  ├─ NomadexMCP              └─ HumbleLegacyMCP   │
-  │  ├─ EnvoiMCP                                     │
+  │  ├─ HumbleSwapMCP           ├─ TinymanMCP        │
+  │  ├─ NomadexMCP              ├─ PactFiMCP         │
+  │  ├─ EnvoiMCP                └─ HumbleLegacyMCP   │
   │  └─ MimirMCP                                     │
   │                                                  │
   │  Cross-chain (Voi ↔ Algorand)                    │
@@ -71,6 +71,7 @@ A local-first integration environment for the Ulu MCP ecosystem. UluOS composes 
 
 | Service | Purpose |
 |---------|---------|
+| **TinymanMCP** | Tinyman v2 AMM DEX: pool discovery, swap quotes and transactions, add/remove liquidity, asset analytics |
 | **PactFiMCP** | PactFi AMM DEX: pool discovery, swap quotes and transactions, add/remove liquidity |
 | **HumbleLegacyMCP** | Legacy Humble Swap DEX: ASA-based duoswap pools, swap quotes and transactions, add/remove liquidity |
 
@@ -104,7 +105,7 @@ git clone git@github.com:NautilusOSS/UluOS.git && cd UluOS
 
 ### Start using
 
-Open the `UluOS` folder in Cursor — all 137 tools across 13 services are available immediately.
+Open the `UluOS` folder in Cursor — all 150 tools across 14 services are available immediately.
 
 ### HTTP gateway (Docker)
 
@@ -118,7 +119,7 @@ curl http://localhost:3000/capabilities
 
 ## MCP Integration
 
-The gateway is also an MCP server. Agents connect once and get access to all 137 tools across 13 services — no need to configure individual MCP connections.
+The gateway is also an MCP server. Agents connect once and get access to all 150 tools across 14 services — no need to configure individual MCP connections.
 
 **Cursor / local agents (stdio):**
 

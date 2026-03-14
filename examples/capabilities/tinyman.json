@@ -1,0 +1,458 @@
+[
+  {
+    "name": "tinyman.get_pools",
+    "service": "tinyman",
+    "tool": "get_pools",
+    "description": "List top Tinyman v2 liquidity pools on Algorand with TVL, volume, and token pair data.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "number",
+          "default": 50,
+          "description": "Maximum number of pools to return (default 50)"
+        },
+        "offset": {
+          "type": "number",
+          "default": 0,
+          "description": "Offset for pagination (default 0)"
+        }
+      }
+    },
+    "response": {
+      "type": "array",
+      "description": "Pool list with TVL, volume, and token pair data"
+    }
+  },
+  {
+    "name": "tinyman.get_pool",
+    "service": "tinyman",
+    "tool": "get_pool",
+    "description": "Get detailed on-chain info for a Tinyman v2 pool by asset pair. Returns reserves, fees, LP supply, and pool status.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["asset1Id", "asset2Id"],
+      "properties": {
+        "asset1Id": {
+          "type": "number",
+          "description": "First asset ID (use 0 for ALGO)"
+        },
+        "asset2Id": {
+          "type": "number",
+          "description": "Second asset ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "On-chain reserves, fees, LP supply, and pool status"
+    }
+  },
+  {
+    "name": "tinyman.get_pool_analytics",
+    "service": "tinyman",
+    "tool": "get_pool_analytics",
+    "description": "Get analytics data for a Tinyman pool by its address, including volume, TVL, and fees.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["poolAddress"],
+      "properties": {
+        "poolAddress": {
+          "type": "string",
+          "description": "Pool account address on Algorand"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Pool analytics including volume, TVL, and fees"
+    }
+  },
+  {
+    "name": "tinyman.get_tokens",
+    "service": "tinyman",
+    "tool": "get_tokens",
+    "description": "List tokens traded on Tinyman (Algorand) with liquidity and volume data.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "description": "Filter by token symbol (e.g. ALGO, USDC)"
+        },
+        "limit": {
+          "type": "number",
+          "default": 50,
+          "description": "Maximum number of tokens to return (default 50)"
+        }
+      }
+    },
+    "response": {
+      "type": "array",
+      "description": "Token list with liquidity and volume data"
+    }
+  },
+  {
+    "name": "tinyman.get_asset_info",
+    "service": "tinyman",
+    "tool": "get_asset_info",
+    "description": "Get on-chain ASA (Algorand Standard Asset) metadata: name, symbol, decimals, total supply, creator.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "required": ["assetId"],
+      "properties": {
+        "assetId": {
+          "type": "number",
+          "description": "Algorand Standard Asset ID (0 for ALGO)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "ASA metadata including name, symbol, decimals, total supply, and creator"
+    }
+  },
+  {
+    "name": "tinyman.get_asset_analytics",
+    "service": "tinyman",
+    "tool": "get_asset_analytics",
+    "description": "Get Tinyman analytics data for a specific asset including price, volume, and liquidity.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["assetId"],
+      "properties": {
+        "assetId": {
+          "type": "number",
+          "description": "Algorand Standard Asset ID"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Asset analytics including price, volume, and liquidity"
+    }
+  },
+  {
+    "name": "tinyman.get_asset_pools",
+    "service": "tinyman",
+    "tool": "get_asset_pools",
+    "description": "Get all Tinyman pools containing a specific asset.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["assetId"],
+      "properties": {
+        "assetId": {
+          "type": "number",
+          "description": "Algorand Standard Asset ID"
+        },
+        "limit": {
+          "type": "number",
+          "default": 50,
+          "description": "Maximum number of pools to return (default 50)"
+        }
+      }
+    },
+    "response": {
+      "type": "array",
+      "description": "Pools containing the specified asset"
+    }
+  },
+  {
+    "name": "tinyman.get_protocol_stats",
+    "service": "tinyman",
+    "tool": "get_protocol_stats",
+    "description": "Get Tinyman protocol-wide statistics including total TVL and volume on Algorand.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "properties": {}
+    },
+    "response": {
+      "type": "object",
+      "description": "Protocol-wide TVL and volume statistics"
+    }
+  },
+  {
+    "name": "tinyman.get_quote",
+    "service": "tinyman",
+    "tool": "get_quote",
+    "description": "Get a swap quote from Tinyman v2 with expected output, rate, fee, price impact, and minimum received. No transaction is built.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": true,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "standard",
+    "parameters": {
+      "type": "object",
+      "required": ["fromToken", "toToken", "amount"],
+      "properties": {
+        "fromToken": {
+          "type": "string",
+          "description": "From token symbol or ASA ID (e.g. 'ALGO', 'USDC', '31566704')"
+        },
+        "toToken": {
+          "type": "string",
+          "description": "To token symbol or ASA ID"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Amount to swap in human-readable units (e.g. '100' for 100 ALGO)"
+        },
+        "slippage": {
+          "type": "number",
+          "default": 0.5,
+          "description": "Allowed slippage percentage (default 0.5)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Quote with expected output, rate, fee, price impact, and minimum received"
+    }
+  },
+  {
+    "name": "tinyman.swap_txn",
+    "service": "tinyman",
+    "tool": "swap_txn",
+    "description": "Build unsigned transactions to swap tokens on Tinyman v2 (Algorand). Returns base64-encoded transactions for signing via wallet.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["fromToken", "toToken", "amount", "sender"],
+      "properties": {
+        "fromToken": {
+          "type": "string",
+          "description": "From token symbol or ASA ID"
+        },
+        "toToken": {
+          "type": "string",
+          "description": "To token symbol or ASA ID"
+        },
+        "amount": {
+          "type": "string",
+          "description": "Amount to swap in human-readable units"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender wallet address"
+        },
+        "slippage": {
+          "type": "number",
+          "default": 0.5,
+          "description": "Allowed slippage percentage (default 0.5)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Base64-encoded transactions for signing via UluWalletMCP"
+    }
+  },
+  {
+    "name": "tinyman.add_liquidity_txn",
+    "service": "tinyman",
+    "tool": "add_liquidity_txn",
+    "description": "Build unsigned transactions to add liquidity to a Tinyman v2 pool on Algorand. Returns base64-encoded transactions for signing.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["asset1Id", "asset2Id", "amount1", "amount2", "sender"],
+      "properties": {
+        "asset1Id": {
+          "type": "number",
+          "description": "First asset ID (use 0 for ALGO)"
+        },
+        "asset2Id": {
+          "type": "number",
+          "description": "Second asset ID"
+        },
+        "amount1": {
+          "type": "string",
+          "description": "Amount of first asset in human-readable units"
+        },
+        "amount2": {
+          "type": "string",
+          "description": "Amount of second asset in human-readable units"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender wallet address"
+        },
+        "slippage": {
+          "type": "number",
+          "default": 0.5,
+          "description": "Allowed slippage percentage (default 0.5)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Base64-encoded transactions for signing via UluWalletMCP"
+    }
+  },
+  {
+    "name": "tinyman.remove_liquidity_txn",
+    "service": "tinyman",
+    "tool": "remove_liquidity_txn",
+    "description": "Build unsigned transactions to remove liquidity from a Tinyman v2 pool on Algorand. Returns base64-encoded transactions for signing.",
+    "chains": ["algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": true,
+    "requiresSigning": true,
+    "requiresBroadcast": true,
+    "requiresPayment": false,
+    "pricingTier": "premium",
+    "parameters": {
+      "type": "object",
+      "required": ["asset1Id", "asset2Id", "poolTokenAmount", "sender"],
+      "properties": {
+        "asset1Id": {
+          "type": "number",
+          "description": "First asset ID (use 0 for ALGO)"
+        },
+        "asset2Id": {
+          "type": "number",
+          "description": "Second asset ID"
+        },
+        "poolTokenAmount": {
+          "type": "string",
+          "description": "Amount of pool tokens to burn in human-readable units"
+        },
+        "sender": {
+          "type": "string",
+          "description": "Sender wallet address"
+        },
+        "slippage": {
+          "type": "number",
+          "default": 0.5,
+          "description": "Allowed slippage percentage (default 0.5)"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Base64-encoded transactions for signing via UluWalletMCP"
+    }
+  },
+  {
+    "name": "tinyman.report_issue",
+    "service": "tinyman",
+    "tool": "report_issue",
+    "description": "Report an issue with the Tinyman MCP server (unexpected data, errors, bugs, or feature ideas).",
+    "chains": ["algorand-mainnet"],
+    "readOnly": false,
+    "requiresAuth": false,
+    "requiresSigning": false,
+    "requiresBroadcast": false,
+    "requiresPayment": false,
+    "pricingTier": "free",
+    "parameters": {
+      "type": "object",
+      "required": ["title", "description", "category"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Short summary of the issue"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed description of what went wrong"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["bug", "unexpected-data", "api-error", "inconsistency", "feature-request", "other"],
+          "description": "Issue category"
+        },
+        "toolName": {
+          "type": "string",
+          "description": "Which MCP tool was being used"
+        },
+        "input": {
+          "type": "string",
+          "description": "Sanitized JSON of the input parameters"
+        },
+        "output": {
+          "type": "string",
+          "description": "The unexpected output or error message"
+        },
+        "expected": {
+          "type": "string",
+          "description": "Expected behavior"
+        }
+      }
+    },
+    "response": {
+      "type": "object",
+      "description": "Issue creation result or pre-filled GitHub URL"
+    }
+  }
+]
