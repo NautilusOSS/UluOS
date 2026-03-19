@@ -18,7 +18,7 @@
 
                       │
               Infrastructure Layer
-        CoreMCP | WalletMCP | BroadcastMCP
+        CoreMCP | AssetMCP | WalletMCP | BroadcastMCP
 ```
 
 ## Principle

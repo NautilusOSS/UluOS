@@ -17,6 +17,21 @@
       "description": "Raw blockchain facts: accounts, assets, applications, transactions, TEAL compilation"
     },
     {
+      "name": "asset",
+      "version": "0.1.0",
+      "transport": "stdio",
+      "command": "node",
+      "args": ["../AssetMCP/index.js"],
+      "baseUrl": "http://asset-mcp:3015",
+      "layer": "infrastructure",
+      "healthPath": "/health",
+      "capabilitiesPath": "/capabilities",
+      "chains": ["voi-mainnet", "algorand-mainnet"],
+      "tags": ["assets", "asa", "arc200", "arc72"],
+      "visibility": "private",
+      "description": "Asset operations: ASA transfers, ARC-200/ARC-72 token interactions, opt-ins, and balance queries"
+    },
+    {
       "name": "wallet",
       "version": "0.1.0",
       "transport": "stdio",

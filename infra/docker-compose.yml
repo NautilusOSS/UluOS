@@ -43,6 +43,8 @@ services:
     depends_on:
       core-mcp:
         condition: service_healthy
+      asset-mcp:
+        condition: service_healthy
       wallet-mcp:
         condition: service_healthy
       broadcast-mcp:
@@ -87,6 +89,15 @@ services:
     healthcheck:
       <<: *mcp-healthcheck
       test: ["CMD", "wget", "-qO-", "http://localhost:3001/health"]
+
+  asset-mcp:
+    <<: *mcp-stub
+    environment:
+      PORT: 3015
+      SERVICE_NAME: asset
+    healthcheck:
+      <<: *mcp-healthcheck
+      test: ["CMD", "wget", "-qO-", "http://localhost:3015/health"]
 
   wallet-mcp:
     <<: *mcp-stub

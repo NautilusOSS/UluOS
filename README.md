@@ -31,7 +31,7 @@ A local-first integration environment for the Ulu MCP ecosystem. UluOS composes 
                            │
             ┌──────────────┼──────────────┐
             │    Infrastructure Layer     │
-            │ CoreMCP │ WalletMCP │ BcastMCP│
+            │ CoreMCP │ AssetMCP │ WalletMCP │ BcastMCP│
             └─────────────────────────────┘
 ```
 
@@ -48,6 +48,7 @@ A local-first integration environment for the Ulu MCP ecosystem. UluOS composes 
 | Service | Purpose |
 |---------|---------|
 | **UluCoreMCP** | Raw blockchain data (accounts, assets, transactions, TEAL) |
+| **AssetMCP** | Asset operations: ASA transfers, ARC-200/ARC-72 token interactions, opt-ins, and balance queries |
 | **UluWalletMCP** | Key management and transaction signing (never public) |
 | **UluBroadcastMCP** | Transaction submission and confirmation |
 
